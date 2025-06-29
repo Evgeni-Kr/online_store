@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Регистрация</title>
+    <link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
+    <link rel="stylesheet" th:href="@{static/css/login.css}">
+</head>
+<body>
+<h2>Регистрация</h2>
+<form th:action="@{/api/sign_up}" method="post">
+    <div class="detail">
+        <h5>Имя пользователя:</h5>
+        <label>
+            <input type="text" name="username" required>
+        </label>
+    </div>
+    <div class="detail">
+        <h5>Пароль:</h5>
+        <label>
+            <input type="password" name="password" required>
+        </label>
+
+    </div>
+    <button type="submit">Зарегистрироваться</button>
+</form>
+<div th:if="${error}" style="color: red;" th:text="${error}"></div>
+<a th:href="@{/api/login}">Уже есть аккаунт? Войти</a>
+</body>
+</html>
