@@ -1,31 +1,37 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html  >
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xml:lang="ru" xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>Регистрация</title>
-    <link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
-    <link rel="stylesheet" th:href="@{static/css/login.css}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Вход</title>
+    <link  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" >
+    <link th:href="@{/loginStyle.css}" rel="stylesheet" style="display: inline">
 </head>
 <body>
-<h2>Регистрация</h2>
-<form th:action="@{/api/sign_up}" method="post">
-    <div class="detail">
+<form   th:action="@{/api/sign_up}"  method="post">
+    <div class="login-container">
+        <div class="login-card">
+            <h2 class="login-title">Регистрация</h2>
 
-        <label>
-            Имя пользователя:
-            <input type="text" name="username" required>
-        </label>
+            <div class="input-group">
+                <label for="username">Имя пользователя</label>
+                <input type="text" id="username" placeholder="Введите ваш логин">
+            </div>
+
+            <div class="input-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" placeholder="••••••••">
+            </div>
+
+            <button class="login-btn">Зарегистрироваться</button>
+
+            <div class="login-footer">
+                <a th:href="@{/api/login}"> Нет аккаунта? Зарегистрироваться</a>
+            </div>
+        </div>
     </div>
-    <div class="detail">
-
-        <label>
-            Пароль:
-            <input type="password" name="password" required>
-        </label>
-
-    </div>
-    <button type="submit">Зарегистрироваться</button>
+    <div th:if="${error}" style="color: red;" th:text="${error}"></div>
+    <div th:if="${message}" style="color: green;" th:text="${message}"></div>
 </form>
-<div th:if="${error}" style="color: red;" th:text="${error}"></div>
-<a th:href="@{/api/login}">Уже есть аккаунт? Войти</a>
 </body>
 </html>

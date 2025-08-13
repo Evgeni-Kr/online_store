@@ -20,8 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("name","JAVA");
+    public String showRegistrationForm() {
         return "sign_up_page";
     }
 
