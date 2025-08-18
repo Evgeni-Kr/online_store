@@ -6,28 +6,28 @@ import org.example.internet_shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class MyUserService {
+public class MyUserLoginService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MyUserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public MyUserLoginService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public boolean signUp(String username, String password) {
-        if(userRepository.findByUsername(username) != null) {
-           return false;
+    @Transactional
+    public boolean signUp(MyUser myUser) {
+        if (userRepository.findByUsername(myUser.getUsername()) != null) {
+            return false;
         }
-        MyUser user = new MyUser();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRole(UserRole.USER);
-        userRepository.save(user);
-        return true;
+            myUser.setPassword(passwordEncoder.encode(myUser.getPassword()));
+            myUser.setRole(UserRole.USER);
+            userRepository.save(myUser);
+            return true;
     }
 }

@@ -35,7 +35,8 @@ public class SecurityConfig{
                                 "/images/**",
                                 "/webjars/**",
                                 "/loginStyle.css/**",
-                                "/h2-console/**"  // только для разработки!
+                                "/h2-console/**" ,
+                                "api/sign_up"// только для разработки!
                         ).permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -46,7 +47,9 @@ public class SecurityConfig{
                 )
                 .formLogin(form -> form
                         .loginPage("/api/login")
-                        .defaultSuccessUrl("/api/", true)
+                        .loginProcessingUrl("/api/login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/api/login?error=true")
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -54,8 +57,12 @@ public class SecurityConfig{
                         .logoutSuccessUrl("/api/login?logout")
                         .permitAll()
                 )
-                .csrf(Customizer.withDefaults());
-
+                .csrf(Customizer.withDefaults())
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendRedirect("/api/login?error");
+                        })
+                );
         return http.build();
     }
 

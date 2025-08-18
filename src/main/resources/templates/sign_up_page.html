@@ -8,22 +8,22 @@
     <link th:href="@{/loginStyle.css}" rel="stylesheet" style="display: inline">
 </head>
 <body>
-<form   th:action="@{/api/sign_up}"  method="post">
+<form   th:action="@{/api/sign_up}"  method="post" th:object="${user}">
     <div class="login-container">
         <div class="login-card">
             <h2 class="login-title">Регистрация</h2>
 
             <div class="input-group">
                 <label for="username">Имя пользователя</label>
-                <input type="text" id="username" placeholder="Введите ваш логин">
+                <input type="text" id="username" placeholder="Введите ваш логин" required th:field="*{username}">
             </div>
 
             <div class="input-group">
                 <label for="password">Пароль</label>
-                <input type="password" id="password" placeholder="••••••••">
+                <input type="password" id="password" placeholder="••••••••" required th:field="*{password}">
             </div>
 
-            <button class="login-btn">Зарегистрироваться</button>
+            <button class="login-btn" type="submit">Зарегистрироваться</button>
 
             <div class="login-footer">
                 <a th:href="@{/api/login}"> Нет аккаунта? Зарегистрироваться</a>
@@ -31,7 +31,6 @@
         </div>
     </div>
     <div th:if="${error}" style="color: red;" th:text="${error}"></div>
-    <div th:if="${message}" style="color: green;" th:text="${message}"></div>
 </form>
 </body>
 </html>

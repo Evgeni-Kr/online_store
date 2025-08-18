@@ -12,22 +12,23 @@
 <div class="login-container">
     <div class="login-card">
         <h2 class="login-title">Вход</h2>
-
+<form th:action="@{/api/login}" th:method="post">
         <div class="input-group">
             <label for="username">Имя пользователя</label>
-            <input type="text" id="username" placeholder="Введите ваш логин">
+            <input type="text" id="username" placeholder="Введите ваш логин" name="username">
         </div>
 
         <div class="input-group">
             <label for="password">Пароль</label>
-            <input type="password" id="password" placeholder="••••••••">
+            <input type="password" id="password" placeholder="••••••••" name="password">
         </div>
 
-        <button class="login-btn">Войти</button>
+        <button class="login-btn" type="submit">Войти</button>
 
         <div class="login-footer">
             <a th:href="@{/api/register}"> Нет аккаунта? Зарегистрироваться</a>
         </div>
+</form>
     </div>
 </div>
 <div th:if="${error}" style="color: red;" th:text="${error}"></div>

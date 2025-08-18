@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import javax.management.relation.Role;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name="my_user")
+@Getter
 public class MyUser {
 
     @Id

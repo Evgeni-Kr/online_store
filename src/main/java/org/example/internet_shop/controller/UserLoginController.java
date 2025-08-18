@@ -1,39 +1,43 @@
 package org.example.internet_shop.controller;
 
-import org.example.internet_shop.service.MyUserService;
+import org.example.internet_shop.dao.MyUser;
+import org.example.internet_shop.repository.UserRepository;
+import org.example.internet_shop.service.MyUserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/api")
-public class UserController {
-    private final MyUserService userService;
+public class UserLoginController {
+    private final MyUserLoginService userLoginService;
 
     @Autowired
-    public UserController(MyUserService userService) {
-        this.userService = userService;
+    public UserLoginController(MyUserLoginService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userLoginService = userService;
     }
 
     @GetMapping("/register")
-    public String showRegistrationForm() {
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user",new MyUser());
         return "sign_up_page";
     }
 
     @PostMapping("/sign_up")
-    public String signUp(@RequestParam("username") String username,
-                         @RequestParam("password") String password,
-                         Model model) {
-        if(userService.signUp(username, password)) {
+    public String signUp(Model model,
+                         @ModelAttribute("user") MyUser user) {
+        if(userLoginService.signUp(user)) {
             return "redirect:/api/login?registered";
         } else {
             model.addAttribute("error", "Этот пользователь уже существует");
             return "sign_up_page";
         }
+
     }
 
 
@@ -45,7 +49,7 @@ public class UserController {
             model.addAttribute("error", "Неверные имя пользователя или пароль");
         }
         if (logout != null) {
-            model.addAttribute("message", "Вы успешно вышли");
+            model.addAttribute("logout", "Вы успешно вышли");
         }
         return "login_page";
     }
