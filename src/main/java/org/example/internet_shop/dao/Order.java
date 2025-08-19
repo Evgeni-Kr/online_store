@@ -15,10 +15,10 @@ public class Order {
     @Column(name="id")
     private int id;
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_id")  //покупатель
     private MyUser user;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> items;
+    private List<OrderItem> items; // список товаров в корзине
     @Column(name="status")
     @Enumerated(EnumType.STRING)
     private STATUS status;
@@ -28,4 +28,4 @@ enum STATUS {
     processed,
     on_the_way,
     delivered
-}
+}  // статус заказа
