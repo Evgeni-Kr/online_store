@@ -19,16 +19,17 @@ public class MyCustomUserDetailsService implements UserDetailsService {
     public MyCustomUserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         MyUser myUser = userRepository.findByUsername(username);
         if(myUser!=null){
-            UserDetails user = User.builder()
+            UserDetails userDetails = User.builder()
                     .username(myUser.getUsername())
                     .password(myUser.getPassword())
                     .roles(myUser.getRole().name())
                     .build();
-            return user;
+            return userDetails;
         }else {
             throw new UsernameNotFoundException("Unknown user"+username);
         }

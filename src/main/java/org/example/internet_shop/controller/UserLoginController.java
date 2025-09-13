@@ -18,7 +18,7 @@ public class UserLoginController {
     private final MyUserLoginService userLoginService;
 
     @Autowired
-    public UserLoginController(MyUserLoginService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserLoginController(MyUserLoginService userService) {
         this.userLoginService = userService;
     }
 
@@ -58,9 +58,5 @@ public class UserLoginController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("name","JAVA");
-        return "index";
-    }
+
 }

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Вход</title>
     <link  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" >
-    <link th:href="@{/loginStyle.css}" rel="stylesheet" style="display: inline">
+    <link th:href="@{/styles/loginStyle.css}" rel="stylesheet" style="display: inline">
 </head>
 <body>
 <div class="login-container">
@@ -32,7 +32,5 @@
     </div>
 </div>
 <div th:if="${error}" style="color: red;" th:text="${error}"></div>
-<div th:if="${message}" style="color: green;" th:text="${message}"></div>
-
 </body>
 </html>

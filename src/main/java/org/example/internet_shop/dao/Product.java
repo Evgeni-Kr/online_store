@@ -14,9 +14,9 @@ public class Product {
     @Column(name="name")
     private String name;
     @Column(name="price")
-    private int price;
+    private double price;  // рассмотреть тип BigDecimal для расчётов
     @Column(name="quantity")
-    private int quantity;
+    private int stockQuantity;   // складской остаток
     @Column(name="description")
     private String description;
 }

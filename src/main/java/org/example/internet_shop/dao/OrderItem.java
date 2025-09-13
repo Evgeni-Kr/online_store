@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="order_items")
-public class OrderItem {  // товар
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,12 +14,12 @@ public class OrderItem {  // товар
     private int id;
 
     @ManyToOne
-    @JoinColumn(name="order_id")
-    private Order order;
-
-    @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name="order_id")
+    private Order order;
 
     @Column(name="quantity")
     private int quantity;
