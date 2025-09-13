@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
-    private  MyUserService myUserService;
+    private final   MyUserService myUserService;
 
     @Autowired
     public UserController(MyUserService myUserService) {
@@ -20,6 +20,6 @@ public class UserController {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("name","JAVA");
-        return "index";
+        return "home_page";
     }
 }
