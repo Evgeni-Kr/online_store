@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(45deg, #47a7c5, #d6dad9);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.add_order {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.add_order h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+.addOrderForm label {
+    display: block;
+    margin: 15px 0 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.addOrderForm input,
+.addOrderForm textarea,
+.addOrderForm select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+.addOrderForm input:focus,
+.addOrderForm textarea:focus,
+.addOrderForm select:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.addOrderForm textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+.input-with-currency {
+    position: relative;
+}
+
+.input-with-currency input {
+    padding-right: 45px;
+}
+
+.currency {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-weight: 600;
+}
+
+.addOrderForm select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin: 15px 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Стили для валидации */
+.addOrderForm input:invalid:not(:focus),
+.addOrderForm textarea:invalid:not(:focus),
+.addOrderForm select:invalid:not(:focus) {
+    border-color: #dc3545;
+}
+
+.addOrderForm input:valid:not(:focus),
+.addOrderForm textarea:valid:not(:focus),
+.addOrderForm select:valid:not(:focus) {
+    border-color: #28a745;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .add_order {
+        margin: 10px;
+        padding: 20px;
+    }
+
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
+}
+
+/* Анимация появления */
+.add_order {
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

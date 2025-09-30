@@ -1,66 +1,15 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Добавить товар</title>
     <meta charset="UTF-8">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-        .add_order {
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .addOrderForm label {
-            display: block;
-            margin: 10px 0 5px;
-            font-weight: bold;
-        }
-        .addOrderForm input,
-        .addOrderForm textarea {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .addOrderForm textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-        .input-with-currency {
-            position: relative;
-        }
-        .input-with-currency input {
-            padding-right: 40px;
-        }
-        .currency {
-            position: absolute;
-            right: 10px;
-            top: 35px;
-            color: #666;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+
+    <link th:href="@{/styles/addProductFormStyles.css}" rel="stylesheet">
 </head>
 <body>
 <div class="add_order">
     <h2>Добавить товар</h2>
+    <br>
     <form class="addOrderForm" method="post">
         <!-- Название товара -->
         <label for="productName">Название товара *</label>
@@ -71,7 +20,7 @@
                 name="productName"
                 required
         >
-
+        <br>
         <!-- Описание товара -->
         <label for="productDescription">Описание товара *</label>
         <textarea
