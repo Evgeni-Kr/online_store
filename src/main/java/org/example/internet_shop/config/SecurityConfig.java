@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/api/login")
                         .loginProcessingUrl("/api/login")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/user/", true)
                         .failureUrl("/api/login?error=true")
                         .permitAll()
                 )

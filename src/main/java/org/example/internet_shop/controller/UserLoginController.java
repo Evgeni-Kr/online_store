@@ -1,13 +1,11 @@
 package org.example.internet_shop.controller;
 
-import org.example.internet_shop.dao.MyUser;
-import org.example.internet_shop.repository.UserRepository;
+import org.example.internet_shop.dto.MyUser;
 import org.example.internet_shop.service.MyUserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package org.example.internet_shop.service;
 
-import org.example.internet_shop.dao.MyUser;
-import org.example.internet_shop.dao.UserRole;
+import org.example.internet_shop.dto.MyUser;
+import org.example.internet_shop.dto.UserRole;
 import org.example.internet_shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
