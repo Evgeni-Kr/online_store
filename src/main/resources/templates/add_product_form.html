@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Добавить товар</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .add_order {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .addOrderForm label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        .addOrderForm input,
+        .addOrderForm textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .addOrderForm textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .input-with-currency {
+            position: relative;
+        }
+        .input-with-currency input {
+            padding-right: 40px;
+        }
+        .currency {
+            position: absolute;
+            right: 10px;
+            top: 35px;
+            color: #666;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="add_order">
+    <h2>Добавить товар</h2>
+    <form class="addOrderForm" method="post">
+        <!-- Название товара -->
+        <label for="productName">Название товара *</label>
+        <input
+                type="text"
+                placeholder="Например: Смартфон Apple iPhone 15 Pro"
+                id="productName"
+                name="productName"
+                required
+        >
+
+        <!-- Описание товара -->
+        <label for="productDescription">Описание товара *</label>
+        <textarea
+                id="productDescription"
+                name="description"
+                rows="6"
+                placeholder="Опишите товар подробно: характеристики, преимущества, особенности использования..."
+                required
+        ></textarea>
+
+        <!-- Цена с валютой -->
+        <label for="price">Цена *</label>
+        <div class="input-with-currency">
+            <input
+                    type="text"
+                    id="price"
+                    name="price"
+                    placeholder="0.00"
+                    required
+            >
+            <span class="currency">₽</span>
+        </div>
+
+        <!-- Количество на складе -->
+        <label for="quantity">Количество на складе *</label>
+        <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                min="0"
+                value="0"
+                placeholder="0"
+                required
+        >
+
+        <!-- Категория -->
+        <label for="category">Категория *</label>
+        <select id="category" name="category" required>
+            <option value="">-- Выберите категорию --</option>
+            <option value="electronics">Электроника</option>
+            <option value="clothes">Одежда</option>
+            <option value="books">Книги</option>
+            <option value="home">Дом и сад</option>
+        </select>
+
+        <br><br>
+
+        <!-- Статус наличия -->
+        <label>
+            <input type="checkbox" name="inStock" checked>
+            Товар в наличии
+        </label>
+
+        <br><br>
+
+        <button type="submit">Добавить товар</button>
+    </form>
+</div>
+
+<script>
+    // Маска для форматирования цены
+    const priceInput = document.getElementById('price');
+
+    priceInput.addEventListener('input', function(e) {
+        // Сохраняем позицию курсора
+        const cursorPosition = e.target.selectionStart;
+
+        // Убираем все пробелы и заменяем запятую на точку
+        let value = e.target.value.replace(/\s/g, '').replace(',', '.');
+
+        // Убираем все символы, кроме цифр и точки
+        value = value.replace(/[^\d.]/g, '');
+
+        // Убираем лишние точки
+        const parts = value.split('.');
+        if (parts.length > 2) {
+            value = parts[0] + '.' + parts.slice(1).join('');
+        }
+
+        // Форматируем число
+        const number = parseFloat(value);
+        if (!isNaN(number)) {
+            // Форматируем с пробелами тысяч и двумя знаками после запятой
+            e.target.value = number.toLocaleString('ru-RU', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+            // Восстанавливаем позицию курсора с учетом добавленных пробелов
+            const newCursorPosition = cursorPosition + (e.target.value.length - value.length);
+            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+        } else if (value === '') {
+            e.target.value = '';
+        }
+    });
+
+    // Обработка отправки формы - преобразуем цену обратно в число
+    document.querySelector('.addOrderForm').addEventListener('submit', function(e) {
+        // Преобразуем отформатированную цену обратно в число
+        const priceValue = priceInput.value.replace(/\s/g, '').replace(',', '.');
+        priceInput.value = priceValue;
+
+        // Можно добавить дополнительную валидацию здесь
+        if (parseFloat(priceValue) <= 0) {
+            e.preventDefault();
+            alert('Цена должна быть больше 0');
+            priceInput.focus();
+        }
+    });
+
+    // Фокус на поле ввода при загрузке страницы
+    document.getElementById('productName').focus();
+</script>
+</body>
+</html>

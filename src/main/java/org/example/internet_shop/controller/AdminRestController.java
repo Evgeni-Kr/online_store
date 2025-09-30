@@ -23,24 +23,24 @@ public class AdminRestController {
 
 
     @GetMapping("/get/product/{id}")
-    public Optional<Product> getAdminOrderItem(@PathVariable int id, Model model) {
+    public Optional<Product> getAdminProduct(@PathVariable int id, Model model) {
         return productService.findProductById(id);
     }
 
     @GetMapping("/get/products")
-    public List<Product> getAllAdminOrderItems(Model model) {
+    public List<Product> getAllAdminProducts(Model model) {
         return productService.findAllProducts();
     }
 
     @PutMapping("/add/product")
-    public Product postAdminOrderItem(@RequestBody Product product) {
+    public Product postAdminProduct(@RequestBody Product product) {
         return productService.addProduct(product);
     }
 
 
 
     @DeleteMapping("/delete/product/{id}")
-    public String deleteAdminOrderItem(@PathVariable int id) {
+    public String deleteAdminProduct(@PathVariable int id) {
            Optional<Product> product = productService.findProductById(id);
         productService.deleteProductById(id);
         return "Предмет "  + product.toString() + " удалён";
