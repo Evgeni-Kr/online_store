@@ -10,7 +10,7 @@
 <div class="add_order">
     <h2>Добавить товар</h2>
     <br>
-    <form class="addOrderForm" method="post">
+    <form class="addOrderForm" method="post" th:action="@{/product/create}">
         <!-- Название товара -->
         <label for="productName">Название товара *</label>
         <input
@@ -67,14 +67,8 @@
         </select>
 
         <br><br>
-
-        <!-- Статус наличия -->
-        <label>
-            <input type="checkbox" name="inStock" checked>
-            Товар в наличии
-        </label>
-
-        <br><br>
+         <label for="photos">Фото</label>
+         <input id="photos" type="file">
 
         <button type="submit">Добавить товар</button>
     </form>

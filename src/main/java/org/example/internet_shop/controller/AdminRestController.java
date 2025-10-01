@@ -32,10 +32,6 @@ public class AdminRestController {
         return productService.findAllProducts();
     }
 
-    @PutMapping("/add/product")
-    public Product postAdminProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
-    }
 
 
 
