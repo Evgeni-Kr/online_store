@@ -1,4 +1,4 @@
-package org.example.internet_shop.dao;
+package org.example.internet_shop.dto;
 
 import jakarta.persistence.*;
 import lombok.Data;

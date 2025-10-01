@@ -1,7 +1,7 @@
 package org.example.internet_shop.controller;
 
 
-import org.example.internet_shop.dao.Product;
+import org.example.internet_shop.dto.Product;
 import org.example.internet_shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,11 +19,11 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-      private final  ProductService productService;
-      @Autowired
-      public ProductController(ProductService productService) {
-          this.productService = productService;
-      }
+    private final  ProductService productService;
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
     @GetMapping("/get/product/{id}")
     public String getProductById(@PathVariable int id, Model model) {
         return "redirect:/products/" + id;
@@ -31,8 +31,8 @@ public class ProductController {
 
     @GetMapping("/get/products")
     public String getProducts(Model model) {
-          List<Product> products = productService.findAllProducts();
-          model.addAttribute("products", products);
+        List<Product> products = productService.findAllProducts();
+        model.addAttribute("products", products);
 
 
         return "home_page";

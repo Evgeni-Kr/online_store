@@ -1,7 +1,7 @@
 package org.example.internet_shop.service;
 
-import org.example.internet_shop.dao.Image;
-import org.example.internet_shop.dao.Product;
+import org.example.internet_shop.dto.Image;
+import org.example.internet_shop.dto.Product;
 import org.example.internet_shop.exceptions.ImageProcessingException;
 import org.example.internet_shop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
