@@ -93,7 +93,55 @@
     </div>
 </header>
 
-<main></main>
+<main>
+    <h1 class="section-title">Каталог товаров</h1>
+
+    <!-- Сообщение если нет товаров -->
+    <div th:if="${products == null or products.isEmpty()}" class="no-products">
+        <h3>Товары не найдены</h3>
+        <p>Пока нет товаров в каталоге.</p>
+        <a th:href="@{/product/create}" class="btn btn-primary">Добавить первый товар</a>
+    </div>
+
+    <!-- Сетка товаров -->
+    <div class="products-grid" th:unless="${products == null or products.isEmpty()}">
+        <div class="product-card" th:each="product : ${products}">
+            <!-- Изображение товара -->
+            <img th:if="${product.previewImageId != null}"
+                 th:src="@{/images/{id}(id=${product.previewImageId})}"
+                 alt="Product image" class="product-image">
+            <img th:unless="${product.previewImageId != null}"
+                 th:src="@{/images/placeholder.png}"
+                 alt="No image" class="product-image">
+
+            <div class="product-info">
+                <h3 class="product-title" th:text="${product.name}">Название товара</h3>
+                <div class="product-price" th:text="${'₽' + #numbers.formatDecimal(product.price, 1, 2)}">
+                    ₽0.00
+                </div>
+                <div class="product-category" th:text="${product.category}">Категория</div>
+                <div class="product-stock"
+                     th:classappend="${product.stockQuantity > 0} ? 'in-stock' : 'out-of-stock'"
+                     th:text="${product.stockQuantity > 0} ?
+                     'В наличии (' + ${product.stockQuantity} + ' шт.)' : 'Нет в наличии'">
+                    В наличии
+                </div>
+                <p class="product-description"
+                   th:text="${product.description != null} ?
+                   ${#strings.abbreviate(product.description, 100)} : 'Нет описания'">
+                    Описание товара
+                </p>
+
+                <button class="btn-add-to-cart"
+                        th:disabled="${product.stockQuantity <= 0}">
+                    <span th:text="${product.stockQuantity > 0} ? 'В корзину' : 'Нет в наличии'">
+                        В корзину
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
 <footer></footer>
 </body>
 </html>

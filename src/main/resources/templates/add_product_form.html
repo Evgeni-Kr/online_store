@@ -3,24 +3,25 @@
 <head>
     <title>Добавить товар</title>
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/styles/addProductFormStyles.css}" rel="stylesheet">
 </head>
 <body>
 <div class="add_order">
     <h2>Добавить товар</h2>
     <br>
-    <form class="addOrderForm" method="post" th:action="@{/product/create}">
+    <form class="addOrderForm" method="post" th:action="@{/product/create}" enctype="multipart/form-data">
         <!-- Название товара -->
         <label for="productName">Название товара *</label>
         <input
                 type="text"
                 placeholder="Например: Смартфон Apple iPhone 15 Pro"
                 id="productName"
-                name="productName"
-                required
+                name="name"
+        required
         >
         <br>
+
         <!-- Описание товара -->
         <label for="productDescription">Описание товара *</label>
         <textarea
@@ -49,11 +50,11 @@
         <input
                 type="number"
                 id="quantity"
-                name="quantity"
-                min="0"
-                value="0"
-                placeholder="0"
-                required
+                name="stockQuantity"
+        min="0"
+        value="0"
+        placeholder="0"
+        required
         >
 
         <!-- Категория -->
@@ -67,8 +68,20 @@
         </select>
 
         <br><br>
-         <label for="photos">Фото</label>
-         <input id="photos" type="file">
+
+        <!-- Фото товара - КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ -->
+        <label for="files">Фото товара *</label>
+        <input
+                id="files"
+                type="file"
+                name="files"
+        multiple
+        accept="image/*"
+        required
+        >
+        <small style="color: #666;">Можно выбрать несколько изображений</small>
+
+        <br><br>
 
         <button type="submit">Добавить товар</button>
     </form>
@@ -117,11 +130,31 @@
         const priceValue = priceInput.value.replace(/\s/g, '').replace(',', '.');
         priceInput.value = priceValue;
 
-        // Можно добавить дополнительную валидацию здесь
+        // Валидация цены
         if (parseFloat(priceValue) <= 0) {
             e.preventDefault();
             alert('Цена должна быть больше 0');
             priceInput.focus();
+            return;
+        }
+
+        // Валидация файлов
+        const fileInput = document.getElementById('files');
+        if (fileInput.files.length === 0) {
+            e.preventDefault();
+            alert('Пожалуйста, выберите хотя бы одно изображение');
+            fileInput.focus();
+            return;
+        }
+
+        // Проверка типа файлов
+        for (let file of fileInput.files) {
+            if (!file.type.startsWith('image/')) {
+                e.preventDefault();
+                alert('Пожалуйста, выбирайте только изображения');
+                fileInput.focus();
+                return;
+            }
         }
     });
 

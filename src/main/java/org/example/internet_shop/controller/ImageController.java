@@ -2,7 +2,7 @@ package org.example.internet_shop.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.internet_shop.dao.Image;
+import org.example.internet_shop.dto.Image;
 import org.example.internet_shop.exceptions.ImageNotFoundException;
 import org.example.internet_shop.exceptions.InvalidImageException;
 import org.example.internet_shop.service.ImageService;
@@ -11,6 +11,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.ByteArrayInputStream;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @Slf4j
+@RequestMapping("/images")
 public class ImageController {
 
     private final ImageService imageService;
@@ -27,7 +29,7 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @GetMapping("/images/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<InputStreamResource> getImageById(@PathVariable Long id) {
         try {
             Image image = imageService.getImageEntity(id);

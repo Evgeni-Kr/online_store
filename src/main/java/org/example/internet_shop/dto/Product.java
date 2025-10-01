@@ -14,7 +14,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "price")
@@ -29,6 +29,7 @@ public class Product {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
+    @Column(name="date_created")
     private LocalDateTime dateCreated;
 
     @PrePersist

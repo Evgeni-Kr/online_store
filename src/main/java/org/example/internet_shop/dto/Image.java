@@ -15,21 +15,21 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
-    @Column(name="imgName")
+    @Column(name="img_name")
     private String name;
-    @Column(name="originalFileName")
+    @Column(name="original_file_name")
     private String originalFileName;
-    @Column(name="imgType")
+    @Column(name="img_type")
     private String contentType;
-    @Column(name="imgSize")
+    @Column(name="img_size")
     private Long size;
     @Lob
     private byte[] bytes;
-    @Column(name="isPreviewImage")
+    @Column(name="is_preview_image")
     private boolean isPreviewImage;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     public void setPreviewImage(boolean isPreviewImage) {
