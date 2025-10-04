@@ -23,12 +23,12 @@ public class AdminRestController {
 
 
     @GetMapping("/get/product/{id}")
-    public Optional<Product> getAdminProduct(@PathVariable int id, Model model) {
+    public Optional<Product> getAdminProduct(@PathVariable Long id) {
         return productService.findProductById(id);
     }
 
     @GetMapping("/get/products")
-    public List<Product> getAllAdminProducts(Model model) {
+    public List<Product> getAllAdminProducts() {
         return productService.findAllProducts();
     }
 
@@ -36,7 +36,7 @@ public class AdminRestController {
 
 
     @DeleteMapping("/delete/product/{id}")
-    public String deleteAdminProduct(@PathVariable int id) {
+    public String deleteAdminProduct(@PathVariable Long id) {
            Optional<Product> product = productService.findProductById(id);
         productService.deleteProductById(id);
         return "Предмет "  + product.toString() + " удалён";

@@ -38,7 +38,7 @@ public class SecurityConfig {
                                 "/static/**",
                                 "/css/**",
                                 "/js/**",
-                                "/images/**",
+                                "/image/**",
                                 "/webjars/**",
                                 "/styles/loginStyle.css/**",
                                 "/h2-console/**",
@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/api/login")
                         .loginProcessingUrl("/api/login")
-                        .defaultSuccessUrl("/user/", true)
+                        .defaultSuccessUrl("/product/get/products", true)
                         .failureUrl("/api/login?error=true")
                         .permitAll()
                 )

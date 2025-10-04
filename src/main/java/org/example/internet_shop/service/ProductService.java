@@ -29,6 +29,19 @@ public class ProductService {
     public List<Product> findAllProducts() {
         try {
             List<Product> products = productRepository.findAll();
+
+            // Убедимся, что у каждого продукта есть previewImageId
+            for (Product product : products) {
+                if (product.getPreviewImageId() == null && !product.getImages().isEmpty()) {
+                    // Находим первое preview изображение или первое изображение
+                    Image previewImage = product.getImages().stream()
+                            .filter(Image::isPreviewImage)
+                            .findFirst()
+                            .orElse(product.getImages().get(0));
+                    product.setPreviewImageId(previewImage.getId());
+                }
+            }
+
             log.info("Found {} products", products.size());
             return products;
         } catch (Exception e) {
@@ -37,6 +50,12 @@ public class ProductService {
         }
     }
 
+ /*   // Дополнительный метод для получения продукта с изображениями
+    public Product getProductWithImages(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+    }
+*/
     @Transactional
     public void saveProduct(Product product, List<MultipartFile> files) {
         try {
@@ -82,11 +101,11 @@ public class ProductService {
         return image;
     }
 
-    public Optional<Product> findProductById(int id) {
+    public Optional<Product> findProductById(Long id) {
         return productRepository.findById(id);
     }
 
-    public void deleteProductById(int id) {
+    public void deleteProductById(Long id) {
         productRepository.deleteById(id);
     }
 }

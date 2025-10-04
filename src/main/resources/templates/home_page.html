@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Главная страница</title>
     <link rel="stylesheet" th:href="@{/styles/home_page_header_style.css}">
+    <link rel="stylesheet" th:href="@{/styles/home_page_main.css}">
 </head>
 <body>
 <header class="header" id="header">
@@ -17,7 +18,7 @@
         </button>
     </div>
     <div class="header__inner">
-        <a href="/user/" class="logo" aria-label="Логотип магазина" >
+        <a href="/user/" class="logo" aria-label="Логотип магазина">
             <img th:src="@{/images/logo.png}" alt="Логотип магазина" class="logo">
         </a>
         <div class="header__catalog">
@@ -49,12 +50,10 @@
         </div>
 
 
-
-
         <nav class="header__nav" aria-label="Профиль пользователя">
             <ul class="nav-list">
                 <li class="nav-list__item">
-                    <a href="/cart" class="nav-list__link" aria-label="Корзина">
+                    <a href="/basket" class="nav-list__link" aria-label="Корзина">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
                             <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.4 5.2 16.4H17M17 16C16.4 16 16 16.4 16 17C16 17.6 16.4 18 17 18C17.6 18 18 17.6 18 17C18 16.4 17.6 16 17 16ZM9 17C9 17.6 8.6 18 8 18C7.4 18 7 17.6 7 17C7 16.4 7.4 16 8 16C8.6 16 9 16.4 9 17Z"
@@ -94,52 +93,31 @@
 </header>
 
 <main>
-    <h1 class="section-title">Каталог товаров</h1>
-
-    <!-- Сообщение если нет товаров -->
-    <div th:if="${products == null or products.isEmpty()}" class="no-products">
-        <h3>Товары не найдены</h3>
-        <p>Пока нет товаров в каталоге.</p>
-        <a th:href="@{/product/create}" class="btn btn-primary">Добавить первый товар</a>
-    </div>
-
-    <!-- Сетка товаров -->
-    <div class="products-grid" th:unless="${products == null or products.isEmpty()}">
-        <div class="product-card" th:each="product : ${products}">
-            <!-- Изображение товара -->
-            <img th:if="${product.previewImageId != null}"
-                 th:src="@{/images/{id}(id=${product.previewImageId})}"
-                 alt="Product image" class="product-image">
-            <img th:unless="${product.previewImageId != null}"
-                 th:src="@{/images/placeholder.png}"
-                 alt="No image" class="product-image">
-
-            <div class="product-info">
-                <h3 class="product-title" th:text="${product.name}">Название товара</h3>
-                <div class="product-price" th:text="${'₽' + #numbers.formatDecimal(product.price, 1, 2)}">
-                    ₽0.00
+    <!-- Пример отображения списка продуктов с Thymeleaf -->
+    <div th:if="${products != null and !products.isEmpty()}">
+        <div class="products-container">
+            <div th:each="product : ${products}" class="product-item">
+                <!-- Основное изображение продукта -->
+                <div class="product-image">
+                    <img class="preview-img"
+                         th:if="${product.previewImageId != null}"
+                         th:src="@{/image/{id}(id=${product.previewImageId})}"
+                         th:alt="${product.name}"
+                         src="/image/placeholder.jpg">
+                    <img th:unless="${product.previewImageId != null}"
+                         src="/image/placeholder.jpg"
+                         th:alt="${product.name}"
+                         class="preview-img">
                 </div>
-                <div class="product-category" th:text="${product.category}">Категория</div>
-                <div class="product-stock"
-                     th:classappend="${product.stockQuantity > 0} ? 'in-stock' : 'out-of-stock'"
-                     th:text="${product.stockQuantity > 0} ?
-                     'В наличии (' + ${product.stockQuantity} + ' шт.)' : 'Нет в наличии'">
-                    В наличии
-                </div>
-                <p class="product-description"
-                   th:text="${product.description != null} ?
-                   ${#strings.abbreviate(product.description, 100)} : 'Нет описания'">
-                    Описание товара
-                </p>
-
-                <button class="btn-add-to-cart"
-                        th:disabled="${product.stockQuantity <= 0}">
-                    <span th:text="${product.stockQuantity > 0} ? 'В корзину' : 'Нет в наличии'">
-                        В корзину
-                    </span>
-                </button>
+                <h3 th:text="${product.name}">Название продукта</h3>
+                <a class="product_details_btn" th:href="@{/product/get/{id}(id=${product.id})}">
+                    Подробнее</a>
             </div>
         </div>
+    </div>
+
+    <div th:if="${products == null or products.isEmpty()}">
+        <p class="no-products">Товары не найдены</p>
     </div>
 </main>
 <footer></footer>
