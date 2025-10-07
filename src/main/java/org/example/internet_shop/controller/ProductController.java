@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -43,7 +42,7 @@ public class ProductController {
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("product", new Product());
-        return "add_product_form";
+        return "addProductForm";
     }
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
@@ -60,6 +59,6 @@ public class ProductController {
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
 
         model.addAttribute("product", product);
-        return "product_details";
+        return "productDetails";
     }
 }

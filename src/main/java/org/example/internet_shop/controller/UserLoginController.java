@@ -23,7 +23,7 @@ public class UserLoginController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user",new MyUser());
-        return "sign_up_page";
+        return "signUpPage";
     }
 
     @PostMapping("/sign_up")
@@ -33,7 +33,7 @@ public class UserLoginController {
             return "redirect:/api/login?registered";
         } else {
             model.addAttribute("error", "Этот пользователь уже существует");
-            return "sign_up_page";
+            return "signUpPage";
         }
 
     }
@@ -49,7 +49,7 @@ public class UserLoginController {
         if (logout != null) {
             model.addAttribute("logout", "Вы успешно вышли");
         }
-        return "login_page";
+        return "loginPage";
     }
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<String> handleUserNotFound(UsernameNotFoundException ex) {
