@@ -5,6 +5,7 @@
     <title>Главная страница</title>
     <link rel="stylesheet" th:href="@{/styles/home_page_header_style.css}">
     <link rel="stylesheet" th:href="@{/styles/home_page_main.css}">
+
 </head>
 <body>
 <header class="header" id="header">
@@ -65,7 +66,7 @@
                     </a>
                 </li>
                 <li class="nav-list__item">
-                    <a href="/orders" class="nav-list__link" aria-label="Заказы">
+                    <a th:href="@{/order/getOrders}" class="nav-list__link" aria-label="Заказы">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
                             <path d="M16 7C16 5.9 15.1 5 14 5H10C8.9 5 8 5.9 8 7M16 7C17.1 7 18 7.9 18 9V19C18 20.1 17.1 21 16 21H8C6.9 21 6 20.1 6 19V9C6 7.9 6.9 7 8 7M16 7V5C16 3.3 14.7 2 13 2H11C9.3 2 8 3.3 8 5V7"
@@ -76,16 +77,19 @@
                     </a>
                 </li>
                 <li class="nav-list__item">
-                    <a href="/login" class="nav-list__link" aria-label="Войти в аккаунт">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15 3H19C19.6 3 20 3.4 20 4V20C20 20.6 19.6 21 19 21H15M10 17L15 12M15 12L10 7M15 12H3"
-                                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                  stroke-linejoin="round"/>
-                        </svg>
-                        <br>
-                        <span class="nav-list__text">Войти</span>
-                    </a>
+                    <form method="post" th:action="@{/logout}" class="logout-form">
+                        <button type="submit" aria-label="Войти в аккаунт" class="nav-list__button">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 3H19C19.6 3 20 3.4 20 4V20C20 20.6 19.6 21 19 21H15M10 17L15 12M15 12L10 7M15 12H3"
+                                      stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                            <br>
+                            <span class="nav-list__text">Войти</span>
+                        </button>
+                    </form>
+
                 </li>
             </ul>
         </nav>
@@ -119,6 +123,7 @@
     <div th:if="${products == null or products.isEmpty()}">
         <p class="no-products">Товары не найдены</p>
     </div>
+
 </main>
 <footer></footer>
 </body>

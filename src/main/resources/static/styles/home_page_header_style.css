@@ -38,9 +38,9 @@ button.catalog-btn {
     height: 49px;
     font-weight: 500;
     line-height: 24px;
-    border: 3px solid rgba(255, 255, 255, .4);
-    color: rgba(255, 255, 255, .4);
-    text-decoration-color: rgba(255, 255, 255, .4);
+    border: 3px solid white;
+    color: white;
+    text-decoration-color: white;
 }
 
 .search-form {
@@ -200,6 +200,15 @@ li.nav-list__item {
     display: flex;
     height: 49px;
     justify-content: center;
+}
+
+.nav-list__button{
+    background: none;
+    color: white;
+    border: none;
+    align-items: center;
+    justify-items: center;
+    text-decoration: underline;
 }
 
 a {
