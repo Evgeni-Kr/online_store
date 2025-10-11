@@ -16,9 +16,10 @@ public class MyCustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Autowired
-    public MyCustomUserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public MyCustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

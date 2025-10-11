@@ -70,9 +70,9 @@ public class SecurityConfig {
                 .csrf(Customizer.withDefaults())
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint((request, response, authException) ->
-                        {
-                            response.sendRedirect("/api/login?error");
-                        })
+
+                            response.sendRedirect("/api/login?error")
+                        )
                 );
         return http.build();
     }
