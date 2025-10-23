@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Главная страница</title>
+    <link rel="stylesheet" th:href="@{/styles/burgerMenu.css}">
     <link rel="stylesheet" th:href="@{/styles/home_page_header_style.css}">
     <link rel="stylesheet" th:href="@{/styles/home_page_main.css}">
-
+    <script th:src="@{/js/burgerMenu.js}"></script>
 </head>
 <body>
 <header class="header" id="header">
@@ -19,11 +20,11 @@
         </button>
     </div>
     <div class="header__inner">
-        <a href="/user/" class="logo" aria-label="Логотип магазина">
+        <a href="/product/get/products" class="logo" aria-label="Логотип магазина">
             <img th:src="@{/images/logo.png}" alt="Логотип магазина" class="logo">
         </a>
         <div class="header__catalog">
-            <button class="btn btn--primary catalog-btn">
+            <button class="btn btn--primary catalog-btn" id="catalog-btn">
                 <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 1H18M0 7H18M0 13H18" stroke="currentColor" stroke-width="2"/>
                 </svg>
@@ -95,8 +96,30 @@
         </nav>
     </div>
 </header>
+<div class="menu" id="menu">
 
+    <ul class="burger-menu__list">
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Электроника</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Одежда</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Книги</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Спорт</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Красота</a>
+        </li>
+    </ul>
+</div>
+
+<div class="burger-menu__overlay" id="burgerMenuOverlay"></div>
 <main>
+
     <!-- Пример отображения списка продуктов с Thymeleaf -->
     <div th:if="${products != null and !products.isEmpty()}">
         <div class="products-container">
