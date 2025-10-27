@@ -28,6 +28,7 @@ public class Product {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
     private List<Image> images = new ArrayList<>();
+    @Column(name="preview_image_id")
     private Long previewImageId;
     @Column(name="date_created")
     private LocalDateTime dateCreated;
