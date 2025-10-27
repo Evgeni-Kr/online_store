@@ -37,7 +37,7 @@ public class ProductService {
                     Image previewImage = product.getImages().stream()
                             .filter(Image::isPreviewImage)
                             .findFirst()
-                            .orElse(product.getImages().get(0));
+                            .orElse(product.getImages().getFirst());
                     product.setPreviewImageId(previewImage.getId());
                 }
             }
@@ -50,12 +50,7 @@ public class ProductService {
         }
     }
 
- /*   // Дополнительный метод для получения продукта с изображениями
-    public Product getProductWithImages(Long productId) {
-        return productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-    }
-*/
+
     @Transactional
     public void saveProduct(Product product, List<MultipartFile> files) {
         try {
@@ -79,7 +74,7 @@ public class ProductService {
                 Image previewImage = savedProduct.getImages().stream()
                         .filter(Image::isPreviewImage)
                         .findFirst()
-                        .orElse(savedProduct.getImages().get(0));
+                        .orElse(savedProduct.getImages().getFirst());
                 savedProduct.setPreviewImageId(previewImage.getId());
                 productRepository.save(savedProduct);
             }
