@@ -1,8 +1,8 @@
 package org.example.internet_shop.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.internet_shop.dto.Image;
-import org.example.internet_shop.dto.Product;
+import org.example.internet_shop.Entity.Image;
+import org.example.internet_shop.Entity.Product;
 import org.example.internet_shop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

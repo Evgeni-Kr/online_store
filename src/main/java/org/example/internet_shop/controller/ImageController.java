@@ -2,7 +2,7 @@ package org.example.internet_shop.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.internet_shop.dto.Image;
+import org.example.internet_shop.Entity.Image;
 import org.example.internet_shop.exceptions.ImageNotFoundException;
 import org.example.internet_shop.exceptions.InvalidImageException;
 import org.example.internet_shop.service.ImageService;

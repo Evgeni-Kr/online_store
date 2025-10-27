@@ -1,6 +1,6 @@
 package org.example.internet_shop.service;
 
-import org.example.internet_shop.dto.MyUser;
+import org.example.internet_shop.Entity.MyUser;
 import org.example.internet_shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
