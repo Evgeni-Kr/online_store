@@ -2,9 +2,253 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Козина</title>
+    <title>Корзина</title>
+    <link rel="stylesheet" th:href="@{/styles/burgerMenu.css}">
+    <link rel="stylesheet" th:href="@{/styles/home_page_header_style.css}">
+    <link rel="stylesheet" th:href="@{/styles/footer.css}">
+    <link rel="stylesheet" th:href="@{/styles/general.css}">
+    <link rel="stylesheet" th:href="@{/styles/shopCartMain.css}">
+    <script th:src="@{/js/burgerMenu.js}"></script>
 </head>
 <body>
+<header class="header" id="header">
+    <div class="header__location">
+        <button class="location-btn" aria-label="Выбрать местоположение">
+            <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 0C4.1 0 1 3.1 1 7C1 12.2 8 20 8 20C8 20 15 12.2 15 7C15 3.1 11.9 0 8 0ZM8 9.5C6.6 9.5 5.5 8.4 5.5 7C5.5 5.6 6.6 4.5 8 4.5C9.4 4.5 10.5 5.6 10.5 7C10.5 8.4 9.4 9.5 8 9.5Z"
+                      fill="currentColor"/>
+            </svg>
+            <span>Минск</span>
+        </button>
+    </div>
+    <div class="header__inner">
+        <a href="/product/get/products/" class="logo" aria-label="Логотип магазина">
+            <img th:src="@{/images/logo.png}" alt="Логотип магазина" class="logo">
+        </a>
+        <div class="header__catalog">
+            <button class="btn btn--primary catalog-btn" id="catalog-btn">
+                <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 1H18M0 7H18M0 13H18" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+        </div>
+        <div class="header__search">
+            <form class="search-form" role="search">
+                <label class="search-form__label">
+                    <input type="search" class="search-form__input" placeholder="Поиск товаров"
+                           aria-label="Поиск товаров">
+                </label>
+                <button type="submit" class="search-form__submit" aria-label="Найти">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 19L13 13M15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8Z"
+                              stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <button type="reset" class="search-form__reset" aria-label="Очистить поиск">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="2"
+                              stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
 
+
+        <nav class="header__nav" aria-label="Профиль пользователя">
+            <ul class="nav-list">
+                <li class="nav-list__item">
+                    <a th:href="@{/shopCart/get}" class="nav-list__link" aria-label="Корзина">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.4 5.2 16.4H17M17 16C16.4 16 16 16.4 16 17C16 17.6 16.4 18 17 18C17.6 18 18 17.6 18 17C18 16.4 17.6 16 17 16ZM9 17C9 17.6 8.6 18 8 18C7.4 18 7 17.6 7 17C7 16.4 7.4 16 8 16C8.6 16 9 16.4 9 17Z"
+                                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                        </svg>
+                        <br>
+                        <span class="nav-list__text">Корзина</span>
+                    </a>
+                </li>
+                <li class="nav-list__item">
+                    <a th:href="@{/order/getOrders}" class="nav-list__link" aria-label="Заказы">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 7C16 5.9 15.1 5 14 5H10C8.9 5 8 5.9 8 7M16 7C17.1 7 18 7.9 18 9V19C18 20.1 17.1 21 16 21H8C6.9 21 6 20.1 6 19V9C6 7.9 6.9 7 8 7M16 7V5C16 3.3 14.7 2 13 2H11C9.3 2 8 3.3 8 5V7"
+                                  stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <br>
+                        <span class="nav-list__text">Заказы</span>
+                    </a>
+                </li>
+                <li class="nav-list__item">
+                    <form method="post" th:action="@{/logout}" class="logout-form">
+                        <button type="submit" aria-label="Войти в аккаунт" class="nav-list__button">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 3H19C19.6 3 20 3.4 20 4V20C20 20.6 19.6 21 19 21H15M10 17L15 12M15 12L10 7M15 12H3"
+                                      stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                            <br>
+                            <span class="nav-list__text">Войти</span>
+                        </button>
+                    </form>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="menu" id="menu">
+
+    <ul class="burger-menu__list">
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Электроника</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Одежда</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Книги</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Спорт</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Красота</a>
+        </li>
+    </ul>
+</div>
+
+<div class="burger-menu__overlay" id="burgerMenuOverlay"></div>
+
+<main class="cart-main">
+    <div class="cart-header">
+        <h1>🛒 Ваша корзина</h1>
+        <p>Товары, которые вы выбрали</p>
+    </div>
+
+    <div class="cart-content">
+        <!-- Список товаров -->
+        <div class="cart-items">
+            <div class="cart-item">
+                <div class="cart-item-image">
+                    <img src="/images/product1.jpg" alt="Название товара">
+                </div>
+                <div class="cart-item-details">
+                    <h3 class="cart-item-title">PlayStation 5</h3>
+                    <div class="cart-item-price">999.99 ₽</div>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1">
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="remove-btn">
+                            ❌ Удалить
+                        </button>
+                        <button class="favorite-btn">
+                            ❤️ В избранное
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Другие товары... -->
+        </div>
+
+        <!-- Боковая панель с итогами -->
+        <div class="cart-summary">
+            <h2>Итоги заказа</h2>
+            <div class="summary-details">
+                <div class="summary-row">
+                    <span class="summary-label">Товары (3)</span>
+                    <span class="summary-value">2 999.97 ₽</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Доставка</span>
+                    <span class="summary-value">Бесплатно</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Скидка</span>
+                    <span class="summary-value">-300 ₽</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span class="summary-label">Итого</span>
+                    <span class="summary-value">2 699.97 ₽</span>
+                </div>
+            </div>
+
+            <div class="shipping-progress">
+                <div class="free-shipping-message">🎉 Бесплатная доставка!</div>
+                <div class="shipping-progress-bar">
+                    <div class="shipping-progress-fill" style="width: 100%"></div>
+                </div>
+                <small>Вы получили бесплатную доставку</small>
+            </div>
+
+            <button class="checkout-btn">Оформить заказ</button>
+            <a href="/" class="continue-shopping">← Продолжить покупки</a>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Контакты</h3>
+            <div class="contact-item">
+                <span class="icon">📞</span>
+                <p>+375 (29) 123-45-67</p>
+            </div>
+            <div class="contact-item">
+                <span class="icon">✉️</span>
+                <p>info@onlineshop.ru</p>
+            </div>
+            <div class="contact-item">
+                <span class="icon">📍</span>
+                <p>г. Гродно, ул. Ожешко, д. 23</p>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h3>Социальные сети</h3>
+            <a href="#" class="social-link">
+                <span class="social-icon">👤</span>
+                VKontakte
+            </a>
+            <a href="#" class="social-link">
+                <span class="social-icon">📷</span>
+                Instagram
+            </a>
+            <a href="#" class="social-link">
+                <span class="social-icon">🎨</span>
+                Behance
+            </a>
+            <a href="#" class="social-link">
+                <span class="social-icon">⚽</span>
+                Dribbble
+            </a>
+        </div>
+
+        <div class="footer-section">
+            <h3>Быстрые ссылки</h3>
+            <a href="#">О компании</a>
+            <a href="#">Доставка</a>
+            <a href="#">Оплата</a>
+            <a href="#">Гарантия</a>
+        </div>
+
+        <div class="footer-section">
+            <h3>Подписка на рассылку</h3>
+            <div class="newsletter">
+                <input type="email" placeholder="Ваш email">
+                <button>Подписаться</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2024 OnlineShop. Все права защищены.</p>
+    </div>
+</footer>
 </body>
 </html>

@@ -5,7 +5,9 @@
     <title>Главная страница</title>
     <link rel="stylesheet" th:href="@{/styles/burgerMenu.css}">
     <link rel="stylesheet" th:href="@{/styles/home_page_header_style.css}">
-    <link rel="stylesheet" th:href="@{/styles/home_page_main.css}">
+    <link rel="stylesheet" th:href="@{/styles/footer.css}">
+    <link rel="stylesheet" th:href="@{/styles/general.css}">
+    <link rel="stylesheet" th:href="@{/styles/productDetailsMain.css}">
     <script th:src="@{/js/burgerMenu.js}"></script>
 </head>
 <body>
@@ -20,7 +22,7 @@
         </button>
     </div>
     <div class="header__inner">
-        <a href="/user/" class="logo" aria-label="Логотип магазина">
+        <a href="/product/get/products" class="logo" aria-label="Логотип магазина">
             <img th:src="@{/images/logo.png}" alt="Логотип магазина" class="logo">
         </a>
         <div class="header__catalog">
@@ -120,9 +122,86 @@
 <div class="burger-menu__overlay" id="burgerMenuOverlay"></div>
 
 <main>
-
+    <div class="main-content">
+        <div class="product-image ">
+            <img
+                    th:if="${product.previewImageId!=null}"
+                    th:src="@{/image/{id}(id=${product.previewImageId})}"
+                    th:alt="${product.name}"
+                    src="/image/placeholder.jpg">
+            <img th:unless="${product.previewImageId != null}"
+                 src="/image/placeholder.jpg"
+                 th:alt="${product.name}"
+                 class="preview-img">
+        </div>
+        <div class="product-price">
+            <button>Купить</button>
+            <button>В Корзину</button>
+        </div>
+        <div class="product-description">
+            <p th:text="${product.description}">Описание товара</p>
+        </div>
+    </div>
 </main>
 
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Контакты</h3>
+            <div class="contact-item">
+                <span class="icon">📞</span>
+                <p>+375 (29) 123-45-67</p>
+            </div>
+            <div class="contact-item">
+                <span class="icon">✉️</span>
+                <p>info@onlineshop.ru</p>
+            </div>
+            <div class="contact-item">
+                <span class="icon">📍</span>
+                <p>г. Гродно, ул. Ожешко, д. 23</p>
+            </div>
+        </div>
 
+        <div class="footer-section">
+            <h3>Социальные сети</h3>
+            <a href="#" class="social-link">
+                <span class="social-icon">👤</span>
+                VKontakte
+            </a>
+            <a href="#" class="social-link">
+                <span class="social-icon">📷</span>
+                Instagram
+            </a>
+            <a href="#" class="social-link">
+                <span class="social-icon">🎨</span>
+                Behance
+            </a>
+            <a href="#" class="social-link">
+                <span class="social-icon">⚽</span>
+                Dribbble
+            </a>
+        </div>
+
+        <div class="footer-section">
+            <h3>Быстрые ссылки</h3>
+            <a href="#">О компании</a>
+            <a href="#">Доставка</a>
+            <a href="#">Оплата</a>
+            <a href="#">Гарантия</a>
+        </div>
+
+        <div class="footer-section">
+            <h3>Подписка на рассылку</h3>
+            <div class="newsletter">
+                <input type="email" placeholder="Ваш email">
+                <button>Подписаться</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2024 OnlineShop. Все права защищены.</p>
+    </div>
+</footer>
 </body>
 </html>
