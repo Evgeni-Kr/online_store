@@ -120,6 +120,11 @@
 </div>
 
 <div class="burger-menu__overlay" id="burgerMenuOverlay"></div>
+<div class="modal">
+    <label for="quantity">Кол-во товара</label>
+    <input type="number" id="quantity" class="quantity-btn" value="1" step="1"    max="100">
+    <button type="submit">В корзину</button>
+</div>
 
 <main>
     <div class="main-content">
@@ -136,7 +141,7 @@
         </div>
         <div class="product-price">
             <button>Купить</button>
-            <button>В Корзину</button>
+            <button onclick="goToCart()">В Корзину</button>
         </div>
         <div class="product-description">
             <p th:text="${product.description}">Описание товара</p>
@@ -203,5 +208,6 @@
         <p>&copy; 2024 OnlineShop. Все права защищены.</p>
     </div>
 </footer>
+
 </body>
 </html>
