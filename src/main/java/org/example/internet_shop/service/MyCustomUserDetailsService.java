@@ -3,7 +3,6 @@ package org.example.internet_shop.service;
 import org.example.internet_shop.Entity.MyUser;
 import org.example.internet_shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,12 +23,7 @@ public class MyCustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         MyUser myUser = userRepository.findByUsername(username);
         if(myUser!=null){
-            UserDetails userDetails = User.builder()
-                    .username(myUser.getUsername())
-                    .password(myUser.getPassword())
-                    .roles(myUser.getRole().name())
-                    .build();
-            return userDetails;
+            return myUser;
         }else {
             throw new UsernameNotFoundException("Unknown user"+username);
         }

@@ -54,8 +54,9 @@ public class CartService {
         } else {
             // Добавляем новый товар
             CartItem newItem = new CartItem(product, request.getQuantity());
+            newItem.setCart(cart);
             cart.addItem(newItem);
-            cartRepository.save(cart);
+
         }
 
         return new CartDto(cart);

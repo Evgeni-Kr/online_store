@@ -164,15 +164,16 @@
     color: #ffc107;
 }
 
-/* Стили для боковой панели заказа */
-.cart-summary {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    position: sticky;
-    top: 20px;
-}
+/* Стили для боковой панели заказа */.cart-summary {
+                                         background: white;
+                                         border-radius: 12px;
+                                         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                                         padding: 30px;
+                                         position: sticky;
+                                         top: 20px;
+                                         flex: 0 0 350px;
+                                         margin-left: 30px;
+                                     }
 
 .cart-summary h2 {
     font-size: 24px;
@@ -216,6 +217,9 @@
     font-size: 20px;
     font-weight: 700;
     color: #007bff;
+    border-top: 2px solid #007bff;
+    margin-top: 10px;
+    padding-top: 15px;
 }
 
 .checkout-btn {
@@ -230,14 +234,25 @@
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
     margin-bottom: 15px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
 }
 
 .checkout-btn:hover {
     background: linear-gradient(135deg, #218838, #1e9e8a);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+}
+
+.continue-shopping {
+    display: block;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
 }
 
 .continue-shopping {

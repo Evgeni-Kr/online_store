@@ -127,23 +127,37 @@
         <p>Товары, которые вы выбрали</p>
     </div>
 
-    <div class="cart-content">
+    <div class="cart-content" th:if="${!cart.items.isEmpty()}">
         <!-- Список товаров -->
         <div class="cart-items">
-            <div class="cart-item">
+            <div class="cart-item" th:each="item : ${cart.items}">
                 <div class="cart-item-image">
-                    <img src="/images/product1.jpg" alt="Название товара">
+                    <img th:if="${item.product.previewImageId != null}"
+                         th:src="@{/image/{id}(id=${item.product.previewImageId})}"
+                         th:alt="${item.product.name}"
+                         src="/images/placeholder.jpg">
+                    <img th:unless="${item.product.previewImageId != null}"
+                         src="/images/placeholder.jpg"
+                         th:alt="${item.product.name}">
                 </div>
                 <div class="cart-item-details">
-                    <h3 class="cart-item-title">PlayStation 5</h3>
-                    <div class="cart-item-price">999.99 ₽</div>
+                    <h3 class="cart-item-title" th:text="${item.product.name}">Название товара</h3>
+                    <div class="cart-item-price" th:text="${item.product.price}">999.99 ₽</div>
                     <div class="cart-item-quantity">
-                        <button class="quantity-btn">-</button>
-                        <input type="number" class="quantity-input" value="1" min="1">
-                        <button class="quantity-btn">+</button>
+                        <form th:action="@{/shopCart/update/{id}(id=${item.product.id})}" method="post" style="display: inline;">
+                            <input type="hidden" name="_method" value="put"/>
+                            <input type="hidden" name="quantity" th:value="${item.quantity - 1}"/>
+                            <button type="submit" class="quantity-btn" th:disabled="${item.quantity <= 1}">-</button>
+                        </form>
+                        <input type="number" class="quantity-input" th:value="${item.quantity}" min="1" readonly>
+                        <form th:action="@{/shopCart/update/{id}(id=${item.product.id})}" method="post" style="display: inline;">
+                            <input type="hidden" name="_method" value="put"/>
+                            <input type="hidden" name="quantity" th:value="${item.quantity + 1}"/>
+                            <button type="submit" class="quantity-btn">+</button>
+                        </form>
                     </div>
                     <div class="cart-item-actions">
-                        <button class="remove-btn">
+                    <button class="remove-btn">
                             ❌ Удалить
                         </button>
                         <button class="favorite-btn">
@@ -161,8 +175,8 @@
             <h2>Итоги заказа</h2>
             <div class="summary-details">
                 <div class="summary-row">
-                    <span class="summary-label">Товары (3)</span>
-                    <span class="summary-value">2 999.97 ₽</span>
+                    <span class="summary-label">Товары (<span th:text="${cart.totalItems}">3</span>)</span>
+                    <span class="summary-value" th:text="${cart.totalPrice}">2 999.97 ₽</span>
                 </div>
                 <div class="summary-row">
                     <span class="summary-label">Доставка</span>
@@ -170,11 +184,11 @@
                 </div>
                 <div class="summary-row">
                     <span class="summary-label">Скидка</span>
-                    <span class="summary-value">-300 ₽</span>
+                    <span class="summary-value">-0 ₽</span>
                 </div>
                 <div class="summary-row summary-total">
                     <span class="summary-label">Итого</span>
-                    <span class="summary-value">2 699.97 ₽</span>
+                    <span class="summary-value" th:text="${cart.totalPrice}">2 999.97 ₽</span>
                 </div>
             </div>
 
@@ -186,10 +200,16 @@
                 <small>Вы получили бесплатную доставку</small>
             </div>
 
-            <button class="checkout-btn">Оформить заказ</button>
-            <a href="/" class="continue-shopping">← Продолжить покупки</a>
+            <a th:href="@{/order/checkout}" class="checkout-btn">Оформить заказ</a>
+            <a th:href="@{/product/get/products}" class="continue-shopping">← Продолжить покупки</a>
         </div>
     </div>
+
+    <div th:if="${cart.items.isEmpty()}" class="empty-cart">
+        <p class="no-content">Корзина пуста</p>
+        <a th:href="@{/product/get/products}" class="continue-shopping">← Начать покупки</a>
+    </div>
+
 </main>
 <footer>
     <div class="footer-content">

@@ -1,0 +1,132 @@
+.modal {
+    position: absolute;
+    z-index: 2000;
+    background-color: white;
+    max-height: 700px;
+    max-width: 700px;
+    min-height: 25%;
+    min-width: 25%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 12px;
+    border: 2px solid #1338b5;
+    gap: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: modalAppear 0.4s ease-out;
+    visibility: hidden;
+}
+.modal.is-active{
+    visibility: visible;
+}
+/* Анимация появления модального окна */
+@keyframes modalAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* Стили для метки количества товара */
+label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Стили для поля ввода количества */
+.quantity-btn {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.quantity-btn:focus {
+    outline: none;
+    border-color: #1338b5;
+    box-shadow: 0 0 0 3px rgba(19, 56, 181, 0.2);
+}
+
+/* Стили для кнопки добавления в корзину */
+.modal-btn {
+    background: #28a745;
+    border-radius: 12px;
+    border: none;
+    color: white;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-btn:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.modal-btn:active {
+    transform: translateY(0);
+}
+
+/* Стили для иконки корзины */
+.modal-btn::before {
+    content: "🛒";
+    font-size: 1.2rem;
+}
+
+
+.qty-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qty-btn:hover {
+    background-color: #e9ecef;
+}
+
+.qty-btn:active {
+    transform: scale(0.95);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+    .modal {
+        padding: 20px;
+    }
+
+    .product-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .product-image {
+        align-self: center;
+    }
+}

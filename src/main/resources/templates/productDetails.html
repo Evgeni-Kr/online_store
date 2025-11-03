@@ -8,7 +8,8 @@
     <link rel="stylesheet" th:href="@{/styles/footer.css}">
     <link rel="stylesheet" th:href="@{/styles/general.css}">
     <link rel="stylesheet" th:href="@{/styles/productDetailsMain.css}">
-    <script th:src="@{/js/burgerMenu.js}"></script>
+    <link rel="stylesheet" th:href="@{/styles/modalMenu.css}">
+
 </head>
 <body>
 <header class="header" id="header">
@@ -120,10 +121,11 @@
 </div>
 
 <div class="burger-menu__overlay" id="burgerMenuOverlay"></div>
-<div class="modal">
+<div class="modal" id="modal">
+    <input type="hidden" id="productId" th:value="${product.id}">
     <label for="quantity">Кол-во товара</label>
-    <input type="number" id="quantity" class="quantity-btn" value="1" step="1"    max="100">
-    <button type="submit">В корзину</button>
+    <input type="number" id="quantity" class="quantity-btn" value="1" step="1" max="100">
+    <button type="button" class="modal-btn" id="modal-btn">В корзину</button>
 </div>
 
 <main>
@@ -141,7 +143,7 @@
         </div>
         <div class="product-price">
             <button>Купить</button>
-            <button onclick="goToCart()">В Корзину</button>
+            <button id="in-cart">В Корзину</button>
         </div>
         <div class="product-description">
             <p th:text="${product.description}">Описание товара</p>
@@ -198,8 +200,10 @@
         <div class="footer-section">
             <h3>Подписка на рассылку</h3>
             <div class="newsletter">
-                <input type="email" placeholder="Ваш email">
-                <button>Подписаться</button>
+                <label>
+                    <input type="email" placeholder="Ваш email">
+                    <label>
+                        <button>Подписаться</button>
             </div>
         </div>
     </div>
@@ -209,5 +213,8 @@
     </div>
 </footer>
 
+
+<script th:src="@{/js/modal.js}"></script>
+<script th:src="@{/js/burgerMenu.js}"></script>
 </body>
 </html>

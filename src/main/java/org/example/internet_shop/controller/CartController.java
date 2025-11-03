@@ -4,6 +4,7 @@ import org.example.internet_shop.Entity.MyUser;
 import org.example.internet_shop.dto.*;
 import org.example.internet_shop.service.CartService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +17,31 @@ public class CartController {
 
     private final CartService cartService;
 
-    @GetMapping
+    @GetMapping("/get")
     public ResponseEntity<CartDto> getCart(@AuthenticationPrincipal MyUser user) {
         CartDto cart = cartService.getCart(user);
         return ResponseEntity.ok(cart);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CartDto> addToCart(
+    public ResponseEntity<?> addToCart(
             @RequestBody AddToCartRequest request,
             @AuthenticationPrincipal MyUser user) {
-        CartDto cart = cartService.addToCart(request, user);
-        return ResponseEntity.ok(cart);
-    }
 
+        // Проверяем, что пользователь аутентифицирован
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Пользователь не аутентифицирован");
+        }
+
+        try {
+            CartDto cart = cartService.addToCart(request, user);
+            return ResponseEntity.ok(cart);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ошибка при добавлении в корзину: " + e.getMessage());
+        }
+    }
     @PutMapping("/item/{itemId}")
     public ResponseEntity<CartDto> updateCartItem(
             @PathVariable Long itemId,
