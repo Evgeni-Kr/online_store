@@ -2,6 +2,7 @@ package org.example.internet_shop.controller;
 
 import org.example.internet_shop.service.MyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,5 +22,11 @@ public class UserController {
     public String index(Model model) {
         model.addAttribute("name","JAVA");
         return "home_page";
+    }
+
+    @GetMapping("/check-role")
+    public String checkRole(Authentication authentication) {
+        System.out.println("User roles: " + authentication.getAuthorities());
+        return "redirect:/product/get/products";
     }
 }

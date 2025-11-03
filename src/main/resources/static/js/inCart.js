@@ -1,20 +1,27 @@
 const inCartBtn = document.getElementById("in-cart")
-const modal = document.querySelector('.modal')
+/*
+const inCart = document.querySelector('.modal')
 const overlay = document.getElementById('burgerMenuOverlay')
-const modalBtn = document.getElementById('modal-btn')
+const modalBtn = document.getElementById('inCart-btn')
+*/
 
 // Проверка существования элементов
-if (inCartBtn && modal) {
+/*
+if (inCartBtn && inCart) {
     inCartBtn.addEventListener('click', openModal);
 }
 
 if (overlay) {
     overlay.addEventListener('click', closeModal)
 }
+*/
 
+
+
+/*
 function openModal(e) {
     e.preventDefault();
-    modal.classList.add('is-active')
+    inCart.classList.add('is-active')
     document.body.classList.add('no-scroll')
     if (overlay) {
         overlay.classList.add('is-active')
@@ -22,22 +29,21 @@ function openModal(e) {
 }
 
 function closeModal() {
-    modal.classList.remove('is-active');
+    inCart.classList.remove('is-active');
     document.body.classList.remove('no-scroll');
     if (overlay) {
         overlay.classList.remove('is-active');
     }
 }
-
 // Закрытие по ESC
 document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+    if (e.key === 'Escape' && inCart.classList.contains('is-active')) {
         closeModal();
     }
 });
-
-if (modalBtn) {
-    modalBtn.addEventListener("click", addToCart);
+*/
+if (inCartBtn) {
+    inCartBtn.addEventListener("click", addToCart);
 }
 
 function addToCart() {
@@ -62,7 +68,7 @@ function addToCart() {
     // Создаем объект для отправки
     const requestData = {
         productId: parseInt(productId),
-        quantity: parseInt(quantity)
+        quantity: 1
     };
 
     console.log('Sending data:', requestData); // Для отладки

@@ -122,11 +122,7 @@
 
 <div class="burger-menu__overlay" id="burgerMenuOverlay"></div>
 <div class="modal" id="modal">
-    <input type="hidden" id="productId" th:value="${product.id}">
-    <label for="quantity">Кол-во товара</label>
-    <input type="number" id="quantity" class="quantity-btn" value="1" step="1" max="100">
-    <button type="button" class="modal-btn" id="modal-btn">В корзину</button>
-</div>
+   </div>
 
 <main>
     <div class="main-content">
@@ -143,6 +139,7 @@
         </div>
         <div class="product-price">
             <button>Купить</button>
+            <input type="hidden" id="productId" th:value="${product.id}">
             <button id="in-cart">В Корзину</button>
         </div>
         <div class="product-description">
@@ -214,7 +211,7 @@
 </footer>
 
 
-<script th:src="@{/js/modal.js}"></script>
+<script th:src="@{/js/inCart.js}"></script>
 <script th:src="@{/js/burgerMenu.js}"></script>
 </body>
 </html>
