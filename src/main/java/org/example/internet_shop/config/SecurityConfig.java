@@ -1,7 +1,6 @@
 package org.example.internet_shop.config;
 
 
-import org.example.internet_shop.security.provisioning.CustomInMemoryUserDetailsManager;
 import org.example.internet_shop.service.MyCustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +12,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -69,7 +66,7 @@ public class SecurityConfig {
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint((request, response, authException) ->
 
-                            response.sendRedirect("/api/login?error")
+                                response.sendRedirect("/api/login?error")
                         )
                 );
         return http.build();
@@ -94,16 +91,6 @@ public class SecurityConfig {
     static RoleHierarchy roleHierarchy() {
         return RoleHierarchyImpl.withDefaultRolePrefix()
                 .role("ADMIN").implies("USER").build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        CustomInMemoryUserDetailsManager manager = new CustomInMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("ADMIN")
-                .password(passwordEncoder.encode("ADMIN"))
-                .roles("ADMIN")
-                .build());
-        return manager;
     }
 
 

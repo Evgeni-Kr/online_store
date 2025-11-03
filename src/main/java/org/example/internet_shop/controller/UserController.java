@@ -1,5 +1,6 @@
 package org.example.internet_shop.controller;
 
+import org.example.internet_shop.Entity.MyUser;
 import org.example.internet_shop.service.MyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,8 +26,15 @@ public class UserController {
     }
 
     @GetMapping("/check-role")
-    public String checkRole(Authentication authentication) {
-        System.out.println("User roles: " + authentication.getAuthorities());
-        return "redirect:/product/get/products";
+    public String checkRole(Authentication authentication, Model model) {
+        System.out.println("User roles: " + authentication.getAuthorities()
+        + " " + authentication.getName()
+        + " " + authentication.getDetails()
+        + " " + authentication.getPrincipal());
+        MyUser user = (MyUser) authentication.getPrincipal();
+        model.addAttribute("user", user);
+        return "orderPage";
     }
+
+
 }
