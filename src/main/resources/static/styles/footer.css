@@ -4,6 +4,7 @@ footer {
     flex-shrink: 0;
     margin-top: auto;
     z-index: 1000;
+   position: relative;
 }
 
 .footer-content {

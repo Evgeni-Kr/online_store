@@ -3,9 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>User Info</title>
+    <div th:replace="~{common :: styles}"></div>
+    <script th:src="@{/js/burgerMenu.js}"></script>
 </head>
 <body>
+<div th:replace="~{common :: header}"></div>
+<div class="menu" id="menu">
 
+    <ul class="burger-menu__list">
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Электроника</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Одежда</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Книги</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Спорт</a>
+        </li>
+        <li class="burger-menu__item">
+            <a href="#" class="burger-menu__link">Красота</a>
+        </li>
+    </ul>
+</div>
+
+<div class="burger-menu__overlay" id="burgerMenuOverlay"></div>
+
+<main>
 <!-- Правильный способ отображения роли пользователя -->
 <h3 th:text="${#authentication?.authorities}">Роль пользователя</h3>
 
@@ -14,6 +40,9 @@
 
 <!-- Альтернативный способ через SecurityContext -->
 <h3 th:text="${#authorization.expression('hasRole(''ROLE_ADMIN'')') ? 'ADMIN' : 'USER'}">Роль пользователя</h3>
+</main>
+<div th:replace="~{common :: footer}"></div>
+
 
 </body>
 </html>

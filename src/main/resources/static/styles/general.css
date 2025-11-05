@@ -8,3 +8,12 @@ body{
     align-items: center;
     justify-content: center;
 }
+.common{
+    display: flex;
+    justify-items: end;
+    width: 100%;
+}
+main{
+    margin-top: 20vh;
+    min-height: 80vh;
+}

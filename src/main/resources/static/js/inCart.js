@@ -1,12 +1,9 @@
 const inCartBtn = document.getElementById("in-cart")
-/*
 const inCart = document.querySelector('.modal')
 const overlay = document.getElementById('burgerMenuOverlay')
 const modalBtn = document.getElementById('inCart-btn')
-*/
 
 // Проверка существования элементов
-/*
 if (inCartBtn && inCart) {
     inCartBtn.addEventListener('click', openModal);
 }
@@ -14,11 +11,9 @@ if (inCartBtn && inCart) {
 if (overlay) {
     overlay.addEventListener('click', closeModal)
 }
-*/
 
 
 
-/*
 function openModal(e) {
     e.preventDefault();
     inCart.classList.add('is-active')
@@ -41,9 +36,8 @@ document.addEventListener('keydown', function (e) {
         closeModal();
     }
 });
-*/
-if (inCartBtn) {
-    inCartBtn.addEventListener("click", addToCart);
+if (modalBtn) {
+    modalBtn.addEventListener("click", addToCart);
 }
 
 function addToCart() {
@@ -68,7 +62,7 @@ function addToCart() {
     // Создаем объект для отправки
     const requestData = {
         productId: parseInt(productId),
-        quantity: 1
+        quantity: parseInt(quantity)
     };
 
     console.log('Sending data:', requestData); // Для отладки
