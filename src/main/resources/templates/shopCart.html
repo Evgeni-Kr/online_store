@@ -60,7 +60,9 @@
                             <input type="hidden" name="quantity" th:value="${item.quantity - 1}"/>
                             <button type="submit" class="quantity-btn" th:disabled="${item.quantity <= 1}">-</button>
                         </form>
+                        <label>
                         <input type="number" class="quantity-input" th:value="${item.quantity}" min="1" readonly>
+                        </label>
                         <form th:action="@{/shopCart/update/{id}(id=${item.product.id})}" method="post" style="display: inline;">
                             <input type="hidden" name="_method" value="put"/>
                             <input type="hidden" name="quantity" th:value="${item.quantity + 1}"/>

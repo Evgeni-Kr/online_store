@@ -1,48 +1,102 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xml:lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User Info</title>
+    <title>Мои заказы</title>
     <div th:replace="~{common :: styles}"></div>
-    <script th:src="@{/js/burgerMenu.js}"></script>
+    <link rel="stylesheet" th:href="@{/styles/orders.css}">
 </head>
 <body>
 <div th:replace="~{common :: header}"></div>
-<div class="menu" id="menu">
 
-    <ul class="burger-menu__list">
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Электроника</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Одежда</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Книги</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Спорт</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Красота</a>
-        </li>
-    </ul>
-</div>
+<main class="orders-main">
+    <div class="container">
+        <h1 class="page-title">Мои заказы</h1>
 
-<div class="burger-menu__overlay" id="burgerMenuOverlay"></div>
+        <div th:if="${orders != null and !orders.isEmpty()}">
+            <div class="orders-list">
+                <div th:each="order : ${orders}" class="order-card">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <div class="order-number">
+                                <span class="label">Заказ №</span>
+                                <span th:text="${order.id}" class="value">123456</span>
+                            </div>
+                            <div class="order-date">
+                                <span class="label">Дата оформления:</span>
+                                <span class="value">12.12.2024</span>
+                                <!-- Если у вас есть поле с датой в Order entity -->
+                                <!-- <span th:text="${#dates.format(order.createdDate, 'dd.MM.yyyy')}" class="value"></span> -->
+                            </div>
+                        </div>
+                        <div class="order-status">
+                            <span th:text="${order.status}"
+                                  th:classappend="${order.status == 'delivered'} ? 'status-delivered' :
+                                                 ${order.status == 'on_the_way'} ? 'status-ontheway' :
+                                                 'status-processed'">
+                                Обрабатывается
+                            </span>
+                        </div>
+                    </div>
 
-<main>
-<!-- Правильный способ отображения роли пользователя -->
-<h3 th:text="${#authentication?.authorities}">Роль пользователя</h3>
+                    <div class="order-items">
+                        <div th:each="item : ${order.items}" class="order-item">
+                            <div class="item-image">
+                                <img th:if="${item.product.previewImageId != null}"
+                                     th:src="@{/image/{id}(id=${item.product.previewImageId})}"
+                                     th:alt="${item.product.name}"
+                                     class="product-img">
+                                <img th:unless="${item.product.previewImageId != null}"
+                                     src="/image/placeholder.jpg"
+                                     th:alt="${item.product.name}"
+                                     class="product-img">
+                            </div>
+                            <div class="item-details">
+                                <h3 class="item-name" th:text="${item.product.name}">Название товара</h3>
+                                <div class="item-price">
+                                    <span th:text="${item.price}" class="price">99.99</span> руб. ×
+                                    <span th:text="${item.quantity}" class="quantity">1</span> шт.
+                                </div>
+                            </div>
+                            <div class="item-total">
+                                <span th:text="${item.price * item.quantity}" class="total-price">99.99</span> руб.
+                            </div>
+                        </div>
+                    </div>
 
-<!-- Или более конкретно для отображения первой роли -->
-<h3 th:text="${#authentication?.authorities[0]?.authority}">Роль пользователя</h3>
+                    <div class="order-footer">
+                        <div class="order-total">
+                            <span class="label">Итого:</span>
+                            <span class="total-amount" th:text="${#numbers.formatDecimal(
+                                order.items.?[price].![#this * quantity].sum(),
+                                1, 2, 'POINT'
+                            )}">199.98</span> руб.
+                        </div>
+                        <div class="order-actions">
+                            <button class="btn btn-secondary">Повторить заказ</button>
+                            <a th:href="@{/order/details/{id}(id=${order.id})}" class="btn btn-primary">
+                                Подробнее о заказе
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- Альтернативный способ через SecurityContext -->
-<h3 th:text="${#authorization.expression('hasRole(''ROLE_ADMIN'')') ? 'ADMIN' : 'USER'}">Роль пользователя</h3>
+        <div th:if="${orders == null or orders.isEmpty()}" class="no-orders">
+            <div class="empty-state">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 7C16 5.9 15.1 5 14 5H10C8.9 5 8 5.9 8 7M16 7C17.1 7 18 7.9 18 9V19C18 20.1 17.1 21 16 21H8C6.9 21 6 20.1 6 19V9C6 7.9 6.9 7 8 7M16 7V5C16 3.3 14.7 2 13 2H11C9.3 2 8 3.3 8 5V7"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h3>У вас еще нет заказов</h3>
+                <p>Совершите свою первую покупку!</p>
+                <a href="/product/get/products" class="btn btn-primary">Перейти к покупкам</a>
+            </div>
+        </div>
+    </div>
 </main>
+
 <div th:replace="~{common :: footer}"></div>
-
-
 </body>
 </html>
