@@ -64,14 +64,6 @@
                         </div>
                     </div>
 
-                    <div class="order-footer">
-                        <div class="order-total">
-                            <span class="label">Итого:</span>
-                            <span class="total-amount" th:text="${#numbers.formatDecimal(
-                                order.items.?[price].![#this * quantity].sum(),
-                                1, 2, 'POINT'
-                            )}">199.98</span> руб.
-                        </div>
                         <div class="order-actions">
                             <button class="btn btn-secondary">Повторить заказ</button>
                             <a th:href="@{/order/details/{id}(id=${order.id})}" class="btn btn-primary">
@@ -94,7 +86,6 @@
                 <a href="/product/get/products" class="btn btn-primary">Перейти к покупкам</a>
             </div>
         </div>
-    </div>
 </main>
 
 <div th:replace="~{common :: footer}"></div>

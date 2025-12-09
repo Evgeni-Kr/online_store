@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -35,8 +36,8 @@ public class CartItem {
         addedDate = LocalDateTime.now();
     }
 
-    public double getTotalPrice() {
-        return product.getPrice() * quantity;
+    public BigDecimal getTotalPrice() {
+        return product.getPrice().multiply(new BigDecimal(quantity));
     }
 
     // Конструктор для удобства

@@ -1,4 +1,4 @@
-package org.example.internet_shop.controller;
+package org.example.internet_shop.controller.restController;
 
 import org.example.internet_shop.Entity.MyUser;
 import org.example.internet_shop.dto.*;

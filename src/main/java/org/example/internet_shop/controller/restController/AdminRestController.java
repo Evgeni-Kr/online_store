@@ -1,4 +1,4 @@
-package org.example.internet_shop.controller;
+package org.example.internet_shop.controller.restController;
 
 import org.example.internet_shop.Entity.Product;
 import org.example.internet_shop.service.ProductService;

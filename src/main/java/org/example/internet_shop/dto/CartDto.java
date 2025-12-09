@@ -4,6 +4,7 @@ package org.example.internet_shop.dto;
 import lombok.Data;
 import org.example.internet_shop.Entity.Cart;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ public class CartDto {
     private Long id;
     private Long userId;
     private List<CartItemDto> items;
-    private double totalPrice;
+    private BigDecimal totalPrice;
     private int totalItems;
 
     public CartDto(Cart cart) {

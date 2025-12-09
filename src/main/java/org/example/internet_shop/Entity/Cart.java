@@ -3,6 +3,8 @@ package org.example.internet_shop.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +41,10 @@ public class Cart {
         updatedDate = LocalDateTime.now();
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return items.stream()
-                .mapToDouble(CartItem::getTotalPrice)
-                .sum();
+                .map(CartItem::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public int getTotalItems() {

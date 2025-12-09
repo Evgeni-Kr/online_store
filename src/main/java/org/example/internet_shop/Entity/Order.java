@@ -2,6 +2,7 @@ package org.example.internet_shop.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private int id;
+    private long id;
     @ManyToOne
     @JoinColumn(name="user_id")  //покупатель
     private MyUser user;
@@ -28,4 +29,4 @@ enum STATUS {
     processed,
     on_the_way,
     delivered
-}  // статус заказа
+}

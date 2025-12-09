@@ -3,6 +3,7 @@ package org.example.internet_shop.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class Product {
     @Column(name = "name")
     private String name;
     @Column(name = "price")
-    private double price;  // рассмотреть тип BigDecimal для расчётов
+    private BigDecimal price;
     @Column(name = "quantity")
     private int stockQuantity;   // складской остаток
     @Column(name = "description")

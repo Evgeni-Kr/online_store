@@ -1,4 +1,4 @@
-package org.example.internet_shop.controller;
+package org.example.internet_shop.controller.restController;
 
 
 import lombok.extern.slf4j.Slf4j;
