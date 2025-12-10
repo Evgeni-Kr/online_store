@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
 import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
@@ -92,6 +93,7 @@ public class SecurityConfig {
         return RoleHierarchyImpl.withDefaultRolePrefix()
                 .role("ADMIN").implies("USER").build();
     }
+
 
 
 }

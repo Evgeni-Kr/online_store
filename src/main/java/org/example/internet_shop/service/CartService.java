@@ -1,18 +1,24 @@
 package org.example.internet_shop.service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import lombok.extern.slf4j.Slf4j;
 import org.example.internet_shop.Entity.Cart;
 import org.example.internet_shop.Entity.CartItem;
 import org.example.internet_shop.Entity.MyUser;
 import org.example.internet_shop.Entity.Product;
+import org.example.internet_shop.controller.ShopCartController;
 import org.example.internet_shop.dto.*;
 import org.example.internet_shop.repository.CartItemRepository;
 import org.example.internet_shop.repository.CartRepository;
 import org.example.internet_shop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CartService {
@@ -21,6 +27,10 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final ProductRepository productRepository;
     private final MyUserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(CartService.class);
+    @PersistenceContext
+    private EntityManager entityManager;
+
 
     public Cart getOrCreateCartForUser(MyUser user) {
         return cartRepository.findByUser(user)
@@ -90,16 +100,45 @@ public class CartService {
 
     @Transactional
     public CartDto removeFromCart(Long productId, MyUser user) {
-        Cart cart = getOrCreateCartForUser(user);
-        cartItemRepository.deleteByCartIdAndProductId(cart.getId(), productId);
+        logger.info("=== CartService.removeFromCart ===");
 
-        // Обновляем корзину
-        cart = cartRepository.findById(cart.getId())
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
+        // 1. Получаем корзину
+        Cart cart = getOrCreateCartForUser(user);
+        logger.info("Корзина ID: {}, товаров: {}", cart.getId(), cart.getItems().size());
+
+        // 2. Находим товар в корзине
+        CartItem itemToRemove = null;
+        for (CartItem item : cart.getItems()) {
+            if (item.getProduct().getId().equals(productId)) {
+                itemToRemove = item;
+                logger.info("Найден товар для удаления: {}", item.getId());
+                break;
+            }
+        }
+
+        if (itemToRemove == null) {
+            logger.error("Товар {} не найден в корзине", productId);
+            throw new RuntimeException("Товар не найден в корзине");
+        }
+
+        // 3. ВАЖНО: Удаляем из коллекции items ПЕРЕД удалением из БД
+        cart.getItems().remove(itemToRemove);
+        logger.info("Товар удален из коллекции items. Теперь товаров: {}", cart.getItems().size());
+
+        // 4. Удаляем из БД
+        cartItemRepository.delete(itemToRemove);
+        logger.info("Товар удален из БД");
+
+        // 5. Обязательно сохраняем корзину
+        cart = cartRepository.save(cart);
+        logger.info("Корзина сохранена в БД");
+
+        // 6. Явно сбрасываем кеш Hibernate для этой сущности
+        entityManager.flush();
+        entityManager.clear();
 
         return new CartDto(cart);
     }
-
     @Transactional
     public void clearCart(MyUser user) {
         Cart cart = getOrCreateCartForUser(user);
@@ -133,5 +172,19 @@ public class CartService {
         }
 
         return new CartDto(cartRepository.save(userCart));
+    }
+
+    // Добавьте эти методы в ваш CartService
+    @Transactional
+    public void updateCartItemQuantity(Long productId, Integer quantity, MyUser user) {
+        // Логика обновления количества
+        Cart cart = getOrCreateCartForUser(user);
+        CartItem item = cart.getItems().stream()
+                .filter(i -> i.getProduct().getId().equals(productId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Товар не найден в корзине"));
+
+        item.setQuantity(quantity);
+        cartRepository.save(cart);
     }
 }

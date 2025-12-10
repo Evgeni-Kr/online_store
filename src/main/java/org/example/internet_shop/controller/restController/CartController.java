@@ -42,7 +42,7 @@ public class CartController {
                     .body("Ошибка при добавлении в корзину: " + e.getMessage());
         }
     }
-    @PutMapping("/item/{itemId}")
+    @PutMapping("/update/{itemId}")
     public ResponseEntity<CartDto> updateCartItem(
             @PathVariable Long itemId,
             @RequestParam Integer quantity,
@@ -51,7 +51,7 @@ public class CartController {
         return ResponseEntity.ok(cart);
     }
 
-    @DeleteMapping("/item/{productId}")
+    @DeleteMapping("/remove/{productId}")
     public ResponseEntity<CartDto> removeFromCart(
             @PathVariable Long productId,
             @AuthenticationPrincipal MyUser user) {
