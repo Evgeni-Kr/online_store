@@ -45,4 +45,15 @@ public class CartItem {
         this.product = product;
         this.quantity = quantity;
     }
+
+    public OrderItem toOrderItem() {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setProduct(product);
+        orderItem.setQuantity(quantity);
+        if (this.product != null && this.product.getPrice() != null) {
+            orderItem.setPrice(this.product.getPrice().doubleValue());
+        } else {
+            orderItem.setPrice(0.0);
+        }return orderItem;
+    }
 }
