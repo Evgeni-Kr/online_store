@@ -6,9 +6,11 @@
     <div th:replace="~{common :: styles}"></div>
     <link rel="stylesheet" th:href="@{/styles/shopCartMain.css}">
     <script th:src="@{/js/burgerMenu.js}"></script>
+
 </head>
 <body>
 <div th:replace="~{common :: header}"></div>
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="csrfTokenInput"/>
 <div class="menu" id="menu">
 
     <ul class="burger-menu__list">
@@ -122,7 +124,7 @@
                 <small>Вы получили бесплатную доставку</small>
             </div>
 
-            <a th:href="@{/order/checkout}" class="checkout-btn">Оформить заказ</a>
+            <button class="order-btn" id="order-btn" type="button">Оформить заказ</button>
             <a th:href="@{/product/get/products}" class="continue-shopping">← Продолжить покупки</a>
         </div>
     </div>
@@ -134,5 +136,6 @@
 
 </main>
 <div th:replace="~{common :: footer}"></div>
+<script th:src="@{/js/toOrder.js}"></script>
 </body>
 </html>

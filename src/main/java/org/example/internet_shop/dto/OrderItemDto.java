@@ -14,7 +14,7 @@ public class OrderItemDto {
     private BigDecimal price;
     private Integer quantity;
     private BigDecimal totalPrice;
-    private String productImageUrl;
+    private long productPreviewImageId;
 
     public OrderItemDto(OrderItem orderItem) {
         this.id = orderItem.getId();
@@ -25,9 +25,8 @@ public class OrderItemDto {
         this.quantity = orderItem.getQuantity();
         this.totalPrice = this.price.multiply(BigDecimal.valueOf(this.quantity));
 
-        // Если у продукта есть изображение
-        /*if (orderItem.getProduct().getImageUrl() != null) {
-            this.productImageUrl = orderItem.getProduct().getImageUrl();
-        }*/
+        if (orderItem.getProduct().getPreviewImageId() != null) {
+            this.productPreviewImageId = orderItem.getProduct().getPreviewImageId();
+        }
     }
 }

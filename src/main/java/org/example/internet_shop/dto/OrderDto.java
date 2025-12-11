@@ -23,8 +23,12 @@ public class OrderDto {
         this.userId = order.getUser().getId();
         this.userName = order.getUser().getUsername();
         this.status = order.getStatusName();
-        this.orderDate = order.getCreatedDate(); // предполагая, что у Order есть createdDate
-
+        if (order.getCreatedDate() != null) {
+            this.orderDate = order.getCreatedDate();
+        } else {
+            System.err.println("WARNING: createdDate is null for order ID: " + order.getId());
+            this.orderDate = LocalDateTime.now();
+        }
         this.items = order.getItems().stream()
                 .map(OrderItemDto::new)
                 .toList();

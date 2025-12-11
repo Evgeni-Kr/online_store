@@ -24,16 +24,5 @@ public class UserController {
         return "home_page";
     }
 
-    @GetMapping("/check-role")
-    public String checkRole(Authentication authentication, Model model) {
-        System.out.println("User roles: " + authentication.getAuthorities()
-        + " " + authentication.getName()
-        + " " + authentication.getDetails()
-        + " " + authentication.getPrincipal());
-        MyUser user = (MyUser) authentication.getPrincipal();
-        model.addAttribute("user", user);
-        return "orderPage";
-    }
-
 
 }

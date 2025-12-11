@@ -20,6 +20,7 @@ public class OrderService {
     private final CartService cartService;
     private final ProductRepository productRepository;
 
+
     @Autowired
     public OrderService(OrderRepository repository, CartService cartService, ProductRepository productRepository) {
         this.cartService = cartService;
@@ -27,9 +28,6 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
-    public List<Order> findAll() {
-        return repository.findAll();
-    }
 
     @Transactional
     public OrderDto createOrderFromCart(MyUser user) {
@@ -40,8 +38,8 @@ public class OrderService {
         Order order = createOrderFromCart(cart);
 
         updateProductStock(cart);
+        repository.save(order);
         cartService.clearCart(user);
-
         return new OrderDto(order);
     }
 
@@ -70,4 +68,29 @@ public class OrderService {
         });
     }
 
+    public List<OrderDto> getUserOrders(MyUser user) {
+        List<Order> orders = repository.findByUser(user);
+        log.info("Found {} orders for user {}", orders.size(), user.getUsername());
+        return orders.stream()
+                .map(OrderDto::new)
+                .collect(Collectors.toList());
+    }
+
+    // Метод для получения конкретного заказа
+    public OrderDto getOrderById(Long orderId, MyUser user) {
+        Order order = repository.findById(orderId)
+                .orElseThrow(() -> {
+                    log.error("Order not found: {}", orderId);
+                    return new RuntimeException("Заказ не найден");
+                });
+
+        // Проверяем, что заказ принадлежит пользователю
+        if (!order.getUser().getId().equals(user.getId())) {
+            log.warn("User {} tried to access order {} belonging to user {}",
+                    user.getId(), orderId, order.getUser().getId());
+            throw new RuntimeException("Доступ запрещен");
+        }
+
+        return new OrderDto(order);
+    }
 }

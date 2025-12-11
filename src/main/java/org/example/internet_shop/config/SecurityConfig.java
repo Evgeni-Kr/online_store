@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
 import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
-import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
@@ -31,7 +30,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-
+                                "/favicon.ico",
                                 "/api/register",
                                 "/api/login",
                                 "/error",
@@ -43,7 +42,7 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/styles/loginStyle.css/**",
                                 "/h2-console/**",
-                                "api/sign_up"// только для разработки!
+                                "/api/sign_up"// только для разработки!
                         ).permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
