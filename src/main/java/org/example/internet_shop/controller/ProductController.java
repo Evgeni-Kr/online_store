@@ -1,6 +1,7 @@
 package org.example.internet_shop.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.internet_shop.Entity.Product;
 import org.example.internet_shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Slf4j
 @RequestMapping("/product")
 public class ProductController {
 
@@ -30,11 +32,14 @@ public class ProductController {
         try {
             List<Product> products = productService.findAllProducts();
             model.addAttribute("products", products);
-            System.out.println("Found products: " + products.size());
+            model.addAttribute("searchQuery", "");
+            String message = "Количество продуктов"+products.size();
+            log.info(message);
         } catch (Exception e) {
-            System.out.println("Error getting products: " + e.getMessage());
-            e.printStackTrace();
+            log.info(e.getMessage());
+            e.getStackTrace();
             model.addAttribute("products", new ArrayList<Product>());
+            model.addAttribute("searchQuery", "");
         }
         return "home_page";
     }
@@ -42,6 +47,7 @@ public class ProductController {
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("product", new Product());
+        model.addAttribute("searchQuery", "");
         return "addProductForm";
     }
     @PreAuthorize("hasRole('ADMIN')")
@@ -59,6 +65,32 @@ public class ProductController {
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
 
         model.addAttribute("product", product);
+        model.addAttribute("searchQuery", "");
         return "productDetails";
+    }
+
+    @GetMapping("category/{category}")
+    public String getProductsByCategory(@PathVariable String category, Model model) {
+        try {
+            List<Product> products = productService.findProductByCategory(category);
+            model.addAttribute("products", products);
+            model.addAttribute("searchQuery", "");
+            final String message = "Категория" + category;
+            final String productCount = "Количество товара" + products.size();
+            log.info(message);
+            log.info(productCount);
+        }catch(NullPointerException e) {
+            model.addAttribute("products", new ArrayList<Product>());
+            model.addAttribute("searchQuery", "");
+        }
+        return "home_page";
+    }
+
+    @GetMapping("name/")
+    public String searchProducts(Model model, @RequestParam(required = false) String q) {
+        List<Product> products = productService.findProductByName(q);
+        model.addAttribute("products", products);
+        model.addAttribute("searchQuery", q); // Добавьте это для отображения введенного запроса на странице
+        return "home_page";
     }
 }

@@ -104,4 +104,21 @@ public class ProductService {
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
     }
+    @Transactional
+    public List<Product> findProductByCategory(String category) {
+        try {
+            return productRepository.findAllByCategory(category);
+        }catch (NullPointerException e) {
+            log.error("Error finding products", e);
+            return new ArrayList<>();
+        }
+
+    }
+    @Transactional
+    public List<Product> findProductByName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        return productRepository.findAllIfNameContain(name.toLowerCase().trim());
+    }
 }

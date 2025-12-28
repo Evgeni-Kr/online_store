@@ -11,28 +11,9 @@
 </head>
 <body>
 <div th:replace="~{common :: header}"></div>
-<div class="menu" id="menu">
 
-    <ul class="burger-menu__list">
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Электроника</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Одежда</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Книги</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Спорт</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Красота</a>
-        </li>
-    </ul>
-</div>
-
-<div class="burger-menu__overlay" id="burgerMenuOverlay"></div>
+<div th:replace="~{common :: burger-menu}"></div>
+<div th:replace="~{common :: burger-menu__ovelay}"></div>
 <main>
     <!-- Пример отображения списка продуктов с Thymeleaf -->
     <div th:if="${products != null and !products.isEmpty()}">

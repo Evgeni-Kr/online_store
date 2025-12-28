@@ -22,6 +22,5 @@ public class CartItemDto {
         this.productPrice = cartItem.getProduct().getPrice();
         this.quantity = cartItem.getQuantity();
         this.totalPrice = cartItem.getTotalPrice();
-        // Здесь можно добавить логику для получения URL превью изображения
     }
 }

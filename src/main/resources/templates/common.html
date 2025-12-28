@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       lang="en">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -8,12 +10,16 @@
         <link rel="stylesheet" th:href="@{/styles/header.css}">
         <link rel="stylesheet" th:href="@{/styles/footer.css}">
         <link rel="stylesheet" th:href="@{/styles/general.css}">
+        <script th:src="@{/js/search-form.js}" defer></script>
+
     </div>
+
     <script th:src="@{/js/burgerMenu.js}"></script>
 </head>
 <body>
 
 <div class="common" th:fragment="header">
+
     <header class="header" id="header">
         <div class="header__location">
             <button class="location-btn" aria-label="Выбрать местоположение">
@@ -36,10 +42,19 @@
                 </button>
             </div>
             <div class="header__search">
-                <form class="search-form" role="search">
+                <form th:action="@{/product/name/}"
+                      method="get"
+                      class="search-form"
+                      role="search"
+                      id="searchForm">
                     <label class="search-form__label">
-                        <input type="search" class="search-form__input" placeholder="Поиск товаров"
-                               aria-label="Поиск товаров">
+                        <input type="search"
+                               class="search-form__input"
+                               placeholder="Поиск товаров"
+                               aria-label="Поиск товаров"
+                               name="q"
+                                id="searchInput"
+                        autocomplete="off"/>
                     </label>
                     <button type="submit" class="search-form__submit" aria-label="Найти">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +62,7 @@
                                   stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </button>
-                    <button type="reset" class="search-form__reset" aria-label="Очистить поиск">
+                    <button type="button" class="search-form__reset" aria-label="Очистить поиск" id="resetButton">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="2"
                                   stroke-linecap="round"/>
@@ -103,6 +118,48 @@
     </header>
 
 </div>
+
+<div class="menu" id="menu" th:fragment="burger-menu">
+
+    <ul class="burger-menu__list">
+        <li class="burger-menu__item">
+            <a th:href="@{/product/get/products}" class="burger-menu__link">Главная</a>
+        </li>
+        <li class="burger-menu__item">
+            <a th:href="@{/product/category/{category}(category=${'electronics'})}"
+               class="burger-menu__link">
+                Электроника
+            </a></li>
+        <li class="burger-menu__item">
+            <a th:href="@{/product/category/{category}(category=${'clothes'})}"
+               class="burger-menu__link">Одежда
+            </a></li>
+        <li class="burger-menu__item">
+            <a th:href="@{/product/category/{category}(category=${'books'})}"
+               class="burger-menu__link">Книги
+            </a></li>
+        <li class="burger-menu__item">
+            <a th:href="@{/product/category/{category}(category=${'sport'})}" class="burger-menu__link">Спорт</a>
+        </li>
+
+        <li class="burger-menu__item">
+            <a th:href="@{/product/category/{category}(category=${'cosmetics'})}" class="burger-menu__link">Красота</a>
+        </li>
+        <li class="burger-menu__item">
+            <a th:href="@{/product/category/{category}(category=${'home'})}" class="burger-menu__link">Дом и сад</a>
+        </li>
+        <li class="burger-menu__item" sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/product/create}" class="burger-menu__link">
+                ➕ Добавить товар
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+<div class="burger-menu__overlay" id="burgerMenuOverlay" th:fragment="burger-menu__ovelay"></div>
+
+
 <div class="common" th:fragment="footer">
     <footer>
         <div class="footer-content">
