@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,5 +34,25 @@ public class OrderRestController {
         OrderDto order = orderService.createOrderFromCart(user);
         return ResponseEntity.ok(order);
     }
-    
+
+    @PostMapping("/buy-now")
+    public ResponseEntity<?> buyNow(
+            @AuthenticationPrincipal MyUser user,
+            @RequestParam Long productId,
+            @RequestParam Integer quantity
+    ) {
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Пользователь не авторизован");
+        }
+
+        try {
+            OrderDto order = orderService.createInstantOrder(user, productId, quantity);
+            return ResponseEntity.ok(order);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
+    }
+
 }

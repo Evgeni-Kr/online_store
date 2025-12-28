@@ -51,9 +51,9 @@ public class CartItem {
         orderItem.setProduct(product);
         orderItem.setQuantity(quantity);
         if (this.product != null && this.product.getPrice() != null) {
-            orderItem.setPrice(this.product.getPrice().doubleValue());
+            orderItem.setPrice(this.product.getPrice());
         } else {
-            orderItem.setPrice(0.0);
+            orderItem.setPrice(BigDecimal.ZERO);
         }return orderItem;
     }
 }

@@ -21,7 +21,7 @@ public class OrderItemDto {
         this.productId = orderItem.getProduct().getId();
         this.productName = orderItem.getProduct().getName();
         this.productDescription = orderItem.getProduct().getDescription();
-        this.price = BigDecimal.valueOf(orderItem.getPrice());
+        this.price = orderItem.getPrice();
         this.quantity = orderItem.getQuantity();
         this.totalPrice = this.price.multiply(BigDecimal.valueOf(this.quantity));
 

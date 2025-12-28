@@ -3,6 +3,8 @@ package org.example.internet_shop.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 @Entity
 @Table(name="order_items")
@@ -24,7 +26,7 @@ public class OrderItem {
     @Column(name="quantity")
     private int quantity;
     @Column(name="price")
-    private double price;
+    private BigDecimal price;
 
 
 }

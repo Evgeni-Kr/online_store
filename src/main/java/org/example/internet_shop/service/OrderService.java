@@ -93,4 +93,35 @@ public class OrderService {
 
         return new OrderDto(order);
     }
+
+    @Transactional
+    public OrderDto createInstantOrder(MyUser user, Long productId, Integer quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Товар не найден"));
+
+        if (product.getStockQuantity() < quantity) {
+            throw new RuntimeException("Недостаточно товара на складе");
+        }
+
+        Order order = new Order();
+        order.setUser(user);
+        order.setStatus(STATUS.processed);
+        order.setCreatedDate(LocalDateTime.now());
+
+        OrderItem item = new OrderItem();
+        item.setProduct(product);
+        item.setQuantity(quantity);
+        item.setPrice(product.getPrice());
+        item.setOrder(order);
+
+        order.setItems(List.of(item));
+
+        product.setStockQuantity(product.getStockQuantity() - quantity);
+        productRepository.save(product);
+
+        repository.save(order);
+
+        return new OrderDto(order);
+    }
+
 }

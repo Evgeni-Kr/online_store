@@ -10,28 +10,8 @@
 </head>
 <body>
 <div th:replace="~{common :: header}"></div>
-<div class="menu" id="menu">
-
-    <ul class="burger-menu__list">
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Электроника</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Одежда</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Книги</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Спорт</a>
-        </li>
-        <li class="burger-menu__item">
-            <a href="#" class="burger-menu__link">Красота</a>
-        </li>
-    </ul>
-</div>
-
-<div class="burger-menu__overlay" id="burgerMenuOverlay"></div>
+<div th:replace="~{common :: burger-menu}"></div>
+<div th:replace="~{common :: burger-menu__ovelay}"></div>
 <div class="modal">
     <input type="hidden" id="productId" th:value="${product.id}">
     <label for="quantity">Кол-во товара</label>
@@ -53,7 +33,7 @@
                  class="preview-img">
         </div>
         <div class="product-price">
-            <button>Купить</button>
+            <button id="buy-now-btn">Купить сейчас</button>
             <button id="in-cart">В Корзину</button>
         </div>
         <div class="product-description">
@@ -62,8 +42,10 @@
     </div>
 </main>
 
+
 <div th:replace="~{common :: footer}"></div>
 
+<script th:src="@{/js/buyNow.js}"></script>
 <script th:src="@{/js/inCart.js}"></script>
 </body>
 </html>

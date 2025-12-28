@@ -128,14 +128,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Альтернативный вариант: Создаем форму и отправляем ее
     function createOrderAlternative() {
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = '/api/order/create';
         form.style.display = 'none';
 
-        // Добавляем CSRF токен если он есть на странице
         const csrfInput = document.querySelector('input[name="_csrf"]');
         if (csrfInput) {
             const csrfClone = csrfInput.cloneNode(true);
@@ -146,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
         form.submit();
     }
 
-    // Вспомогательная функция для показа уведомлений
     function showNotification(message, type) {
         let notificationContainer = document.getElementById("notification-container");
         if (!notificationContainer) {
@@ -194,7 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
 
-    // Добавляем стили для анимаций если их еще нет
     if (!document.querySelector('#notification-styles')) {
         const style = document.createElement('style');
         style.id = 'notification-styles';
