@@ -153,6 +153,11 @@
                 ➕ Добавить товар
             </a>
         </li>
+        <li class="burger-menu__item" sec:authorize="hasRole('MANAGER')">
+            <a th:href="@{/order/order-status}" class="burger-menu__link">
+                Управление заказом
+            </a>
+        </li>
 
     </ul>
 </div>

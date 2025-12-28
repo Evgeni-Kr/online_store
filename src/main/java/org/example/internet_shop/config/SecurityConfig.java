@@ -62,7 +62,7 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .addLogoutHandler(clearSiteData)
                 )
-                .csrf(Customizer.withDefaults())
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint((request, response, authException) ->
 
@@ -90,8 +90,11 @@ public class SecurityConfig {
     @Bean
     static RoleHierarchy roleHierarchy() {
         return RoleHierarchyImpl.withDefaultRolePrefix()
-                .role("ADMIN").implies("USER").build();
+                .role("ADMIN").implies("MANAGER")
+                .role("MANAGER").implies("USER")
+                .build();
     }
+
 
 
 

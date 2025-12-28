@@ -16,15 +16,15 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class OrderService {
-    private final OrderRepository repository;
+    private final OrderRepository orderRepository;
     private final CartService cartService;
     private final ProductRepository productRepository;
 
 
     @Autowired
-    public OrderService(OrderRepository repository, CartService cartService, ProductRepository productRepository) {
+    public OrderService(OrderRepository orderRepository, CartService cartService, ProductRepository productRepository) {
         this.cartService = cartService;
-        this.repository = repository;
+        this.orderRepository = orderRepository;
         this.productRepository = productRepository;
     }
 
@@ -38,7 +38,7 @@ public class OrderService {
         Order order = createOrderFromCart(cart);
 
         updateProductStock(cart);
-        repository.save(order);
+        orderRepository.save(order);
         cartService.clearCart(user);
         return new OrderDto(order);
     }
@@ -69,7 +69,7 @@ public class OrderService {
     }
 
     public List<OrderDto> getUserOrders(MyUser user) {
-        List<Order> orders = repository.findByUser(user);
+        List<Order> orders = orderRepository.findByUser(user);
         log.info("Found {} orders for user {}", orders.size(), user.getUsername());
         return orders.stream()
                 .map(OrderDto::new)
@@ -78,7 +78,7 @@ public class OrderService {
 
     // Метод для получения конкретного заказа
     public OrderDto getOrderById(Long orderId, MyUser user) {
-        Order order = repository.findById(orderId)
+        Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> {
                     log.error("Order not found: {}", orderId);
                     return new RuntimeException("Заказ не найден");
@@ -119,7 +119,26 @@ public class OrderService {
         product.setStockQuantity(product.getStockQuantity() - quantity);
         productRepository.save(product);
 
-        repository.save(order);
+        orderRepository.save(order);
+
+        return new OrderDto(order);
+    }
+
+    public OrderDto updateStatus(Long orderId, String status) {
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Заказ не найден"));
+
+        STATUS newStatus;
+
+        try {
+            newStatus = STATUS.valueOf(status);
+        } catch (Exception e){
+            throw new IllegalArgumentException("Недопустимый статус. Доступны: processed, on_the_way, delivered");
+        }
+
+        order.setStatus(newStatus);
+        orderRepository.save(order);
 
         return new OrderDto(order);
     }

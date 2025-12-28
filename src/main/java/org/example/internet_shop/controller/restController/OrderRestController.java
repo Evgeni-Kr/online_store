@@ -3,15 +3,14 @@ package org.example.internet_shop.controller.restController;
 import lombok.extern.slf4j.Slf4j;
 import org.example.internet_shop.Entity.MyUser;
 import org.example.internet_shop.dto.OrderDto;
+import org.example.internet_shop.dto.UpdateOrderStatusRequest;
 import org.example.internet_shop.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -52,6 +51,21 @@ public class OrderRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(e.getMessage());
+        }
+    }
+    @PreAuthorize("hasAuthority('ROLE_MANAGER')")
+    @PatchMapping("/{orderId}/status")
+    public ResponseEntity<?> updateOrderStatus(
+            @PathVariable Long orderId,
+            @RequestBody UpdateOrderStatusRequest request
+    ) {
+        try {
+            OrderDto updatedOrder = orderService.updateStatus(orderId, request.getStatus());
+            return ResponseEntity.ok(updatedOrder);
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().body("Ошибка обновления статуса");
         }
     }
 

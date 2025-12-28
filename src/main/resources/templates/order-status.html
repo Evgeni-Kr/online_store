@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Управление статусами заказов</title>
+  <div th:replace="~{common :: styles}"></div>
+  <link rel="stylesheet" th:href="@{/styles/order-status.css}">
+
+</head>
+<div th:replace="~{common :: header}"></div>
+<body>
+<div class="container">
+  <h2>Обновление статуса заказа</h2>
+
+  <label for="orderId">Order ID</label>
+  <input type="number" id="orderId" placeholder="Введите ID заказа">
+
+  <label>Новый статус</label>
+  <select id="status">
+    <option value="processed">Обработан</option>
+    <option value="on_the_way">В пути</option>
+    <option value="delivered">Доставлен</option>
+  </select>
+
+  <button class="update-status" onclick="updateStatus()">Обновить статус</button>
+
+  <div id="response" class="response" style="display:none"></div>
+</div>
+<script th:src="@{/js/order-status.js}"></script>
+</body>
+</html>
